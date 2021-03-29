@@ -68,6 +68,7 @@
 										?>
 			                                <li class="txt-en"><a href="#"><?php echo $en_label ?></a></li>
 		                                <?php
+		                            }
 									if (!empty($ar_label)) 
 									{
 										?>
