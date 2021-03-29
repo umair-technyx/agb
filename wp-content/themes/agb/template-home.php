@@ -14,6 +14,7 @@ get_header();?>
   $africa_and_gulf_bank_title = get_field('africa_and_gulf_bank_title');
   $africa_and_gulf_bank_description = get_field('africa_and_gulf_bank_description');
   $find_more_url = get_field('find_more_url');
+  $africa_and_gulf_bank_image = get_field('africa_and_gulf_bank_image');
   $together_we_are_stronger_title = get_field('together_we_are_stronger_title');
   $types_of_services = get_field('types_of_services');
     //service_title
@@ -22,19 +23,39 @@ get_header();?>
     //service_url
   $learn_more_text = get_field('learn_more_text',CONST_SITE_INFORMATION_PAGE_ID);
   $find_more_text = get_field('find_more_text',CONST_SITE_INFORMATION_PAGE_ID);
+  $button_arrow_icon = get_field('button_arrow_icon',CONST_SITE_INFORMATION_PAGE_ID);
 ?>
 <section class="home-banner">
     <div class="b-thumb-wrapper">
         <div class="b-thumb-img">
-            <picture>
-                <source media="(max-width: 600px) and (orientation: portrait)" srcset="https://theprojectdemoserver.com/agb-html/v1//assets/img/bg/bg-sty1.jpg">
-                <!-- Required Dimension: desktop = 1440x810px -->
-                <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/bg/bg-sty1.jpg" alt="banner-02" class="objectfit lozad">
-            </picture>
+          <?php
+            if (!empty($banner_image))
+            {
+              ?>
+                <picture>
+                  <source media="(max-width: 600px) and (orientation: portrait)" srcset="<?php echo $banner_image; ?>">
+                  <!-- Required Dimension: desktop = 1440x810px -->
+                  <img src="<?php echo $banner_image; ?>" alt="banner-02" class="objectfit lozad">
+                </picture>            
+              <?php
+            }
+          ?>
         </div>
         <div class="b-thumb-content">
-            <h1 class="h1 txt-white">Welcome to the <br> New Era of Banking</h1>
-                <p class="txt-white">Through the provision of bespoke banking solutions to our corporate clientele, AGB removes roadblocks allowing your business to evolve and thrive.</p>
+          <?php
+            if (!empty($banner_title))
+            {
+              ?>
+                <h1 class="h1 txt-white"><?php echo $banner_title; ?></h1>
+              <?php
+            }
+            if (!empty($banner_description))
+            {
+              ?>
+                <p class="txt-white"><?php echo $banner_description; ?></p>
+              <?php
+            }
+          ?>
         </div>
     </div>
 </section>
@@ -52,10 +73,29 @@ get_header();?>
                 ?>
                   <div class="link-content">
                     <div class="sec-img">
-                        <img src="<?php echo $account_image; ?>" alt="AGB" class="tosvg js-tosvg" />
+                      <?php
+                        if (!empty($account_image))
+                        {
+                          ?>
+                            <img src="<?php echo $account_image; ?>" alt="AGB" class="tosvg js-tosvg" />
+                          <?php
+                        }
+                      ?>
                     </div>
-                    <p><?php echo $account_title; ?></p>
-                    <a href="<?php echo get_permalink(RETAIL_PAGE_ID).$account_url;?>"><?php echo $learn_more_text; ?></a>
+                    <?php
+                      if (!empty($account_title))
+                      {
+                        ?>
+                          <p><?php echo $account_title; ?></p>
+                        <?php
+                      }
+                      if (!empty($account_url))
+                      {
+                        ?>
+                          <a href="<?php echo get_site_url().$account_url;?>"><?php echo $learn_more_text; ?></a>
+                        <?php
+                      }
+                    ?>
                   </div>
                 <?php
               }
@@ -63,10 +103,29 @@ get_header();?>
           ?>  
         <div class="link-content">
             <div class="sec-img">
-                 <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-branches.svg" alt="AGB" class="tosvg js-tosvg" />
+              <?php
+                if (!empty($our_branches_image))
+                {
+                  ?>
+                    <img src="<?php echo $our_branches_image; ?>" alt="AGB" class="tosvg js-tosvg" />
+                  <?php
+                }
+              ?>  
             </div>
-            <p>Our Branches</p>
-            <a href="../get-in-touch/#branches">Learn More</a>
+            <?php
+              if (!empty($our_branches_title))
+              {
+                ?>
+                  <p><?php echo $our_branches_title; ?></p>
+                <?php
+              }
+              if (!empty($our_branches_url))
+              {
+                ?>  
+                  <a href="<?php echo get_site_url().$our_branches_url;?>"><?php echo $learn_more_text; ?></a>
+                <?php
+              }
+            ?>
         </div>
        </div>
    </div>
@@ -77,12 +136,38 @@ get_header();?>
             <div class="content-box">
                 <div class="content-box-wrapper">
                     <div class="content-box-content">
-                        <h3 class="h3">Africa and Gulf Bank (AGB)</h2>
-                        <p>Africa and Gulf Bank (AGB) is a financial institution that helps SMEs, large corporations, investors, sponsors, and individuals searching for sustainable models realize their projects by offering an array of customized and innovative financial solutions backed by cutting-edge tools and technologies.</p>
-                        <a href="../about" class="btn btn-primary">Find More <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/btn-arrow.svg" alt=">" class="js-tosvg tosvg"></a>
+                      <?php
+                        if (!empty($africa_and_gulf_bank_title))
+                        {
+                          ?>
+                            <h3 class="h3"><?php echo $africa_and_gulf_bank_title; ?></h2>
+                          <?php
+                        }
+                        if (!empty($africa_and_gulf_bank_description))
+                        {
+                          ?>
+                            <p><?php echo $africa_and_gulf_bank_description; ?></p>
+                          <?php
+                        }
+                        if (!empty($find_more_url))
+                        {
+                          ?>
+                            <a href="<?php echo get_site_url().$find_more_url;?>" class="btn btn-primary"><?php echo $find_more_text; ?>
+                              <img src="<?php echo $button_arrow_icon; ?>" alt=">" class="js-tosvg tosvg">
+                            </a>
+                          <?php
+                        }
+                      ?>
                     </div>
                     <div class="content-box-img">
-                        <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/thumbnails/img4.jpg">
+                      <?php
+                        if (!empty($africa_and_gulf_bank_image))
+                        {
+                          ?>
+                            <img src="<?php echo $africa_and_gulf_bank_image; ?>">
+                          <?php
+                        }
+                      ?>
                         <div class="footer-shape"></div>
                     </div>
                 </div>
@@ -93,7 +178,14 @@ get_header();?>
 
         <section class="sec-padded tab-section">
    <div class="container container-expanded">
-       <h2 class="h2">Together we are Stronger</h2>
+      <?php
+        if (!empty($together_we_are_stronger_title))
+        {
+          ?>
+            <h2 class="h2"><?php echo $together_we_are_stronger_title; ?></h2>
+          <?php
+        }
+      ?>
        <div class="content-tabs desktop-view">
             <div class="row no-gutters">
                 <div class="col-md-3">
