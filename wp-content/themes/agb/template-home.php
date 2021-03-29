@@ -3,7 +3,26 @@
 Template Name: Home
 */
 get_header();?>
-
+<?php 
+  $banner_image = get_field('banner_image');
+  $banner_title = get_field('banner_title');
+  $banner_description = get_field('banner_description');
+  $types_of_account = get_field('types_of_account');
+  $our_branches_image = get_field('our_branches_image');
+  $our_branches_title = get_field('our_branches_title');
+  $our_branches_url = get_field('our_branches_url');
+  $africa_and_gulf_bank_title = get_field('africa_and_gulf_bank_title');
+  $africa_and_gulf_bank_description = get_field('africa_and_gulf_bank_description');
+  $find_more_url = get_field('find_more_url');
+  $together_we_are_stronger_title = get_field('together_we_are_stronger_title');
+  $types_of_services = get_field('types_of_services');
+    //service_title
+    //service_description
+    //service_image
+    //service_url
+  $learn_more_text = get_field('learn_more_text',CONST_SITE_INFORMATION_PAGE_ID);
+  $find_more_text = get_field('find_more_text',CONST_SITE_INFORMATION_PAGE_ID);
+?>
 <section class="home-banner">
     <div class="b-thumb-wrapper">
         <div class="b-thumb-img">
@@ -22,37 +41,26 @@ get_header();?>
         <section class="quick-links">
    <div class="container container-expanded">
        <div class="quick-link-bar js-img-slide">
-           <div class="link-content">
-               <div class="sec-img">
-                    <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-account.svg" alt="AGB" class="tosvg js-tosvg" />
-               </div>
-               <p>Current Account</p>
-               <a href="../agb-retail#currentaccount">Learn More</a>
-           </div>
-           <div class="link-content">
-            <div class="sec-img">
-                 <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-investment.svg" alt="AGB" class="tosvg js-tosvg" />
-            </div>
-            <p>Investment Account</p>
-            <a href="../agb-retail#savingaccount">Learn More</a>
-        </div>
-        <div class="link-content">
-            <div class="sec-img">
-                 <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-exchange.svg" alt="AGB" class="tosvg js-tosvg" />
-            </div>
-            <p>Foreign Exchange</p>
-            <a href="../trade-foreign-exchange#foreign-exchange">Learn More</a>
-        </div>
-        <div class="link-content">
-            <div class="sec-img">
-                 <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-finance.svg" alt="AGB" class="tosvg js-tosvg" />
-            </div>
-            <p>Finance</p>
-            <a href="../finance">Learn More</a>
-        </div>
-        <!-- <div class="link-content sty1">
-            <div class="sep"></div>
-        </div> -->
+          <?php
+            if (!empty($types_of_account))
+            {
+              foreach ($types_of_account as $key => $value)
+              {
+                $account_image = $value['account_image'];
+                $account_title = $value['account_title'];
+                $account_url = $value['account_url'];
+                ?>
+                  <div class="link-content">
+                    <div class="sec-img">
+                        <img src="<?php echo $account_image; ?>" alt="AGB" class="tosvg js-tosvg" />
+                    </div>
+                    <p><?php echo $account_title; ?></p>
+                    <a href="<?php echo get_permalink(RETAIL_PAGE_ID).$account_url;?>"><?php echo $learn_more_text; ?></a>
+                  </div>
+                <?php
+              }
+            }
+          ?>  
         <div class="link-content">
             <div class="sec-img">
                  <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-branches.svg" alt="AGB" class="tosvg js-tosvg" />

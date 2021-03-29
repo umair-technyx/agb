@@ -104,7 +104,7 @@
         <div class="container container-expanded">
             <div class="sec-header">
                 <div class="logobox">
-                    <a href="<?php echo get_site_url()?>" class="logo">
+                    <a href="<?php echo get_site_url(); ?>" class="logo">
                     	<?php
 							if (!empty($header_logo)) 
 							{
