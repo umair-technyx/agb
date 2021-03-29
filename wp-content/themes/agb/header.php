@@ -34,6 +34,26 @@
         <div class="js-loader">
     <div></div>
 </div>
+<?php 
+    $en_label = get_field('en_label',CONST_SITE_INFORMATION_PAGE_ID);
+    $ar_label = get_field('ar_label',CONST_SITE_INFORMATION_PAGE_ID);
+    $header_logo = get_field('header_logo',CONST_SITE_INFORMATION_PAGE_ID);
+    $location_icon = get_field('location_icon',CONST_SITE_INFORMATION_PAGE_ID);
+    $location_icon_url = get_field('location_icon_url',CONST_SITE_INFORMATION_PAGE_ID);
+    $about_agb_title = get_field('about_agb_title',CONST_SITE_INFORMATION_PAGE_ID);
+    $about_agb_subtitle = get_field('about_agb_subtitle',CONST_SITE_INFORMATION_PAGE_ID);
+    $corporate_banking_title = get_field('corporate_banking_title',CONST_SITE_INFORMATION_PAGE_ID);
+    $corporate_banking_subtitle = get_field('corporate_banking_subtitle',CONST_SITE_INFORMATION_PAGE_ID);
+    $retail_banking_title = get_field('retail_banking_title',CONST_SITE_INFORMATION_PAGE_ID);
+    $retail_banking_subtitle = get_field('retail_banking_subtitle',CONST_SITE_INFORMATION_PAGE_ID);
+    $find_us_title = get_field('find_us_title',CONST_SITE_INFORMATION_PAGE_ID);
+    $find_us_subtitle = get_field('find_us_subtitle',CONST_SITE_INFORMATION_PAGE_ID);
+    $legal_title = get_field('legal_title',CONST_SITE_INFORMATION_PAGE_ID);
+    $legal_subtitle = get_field('legal_subtitle',CONST_SITE_INFORMATION_PAGE_ID);
+    $visit_section_text = get_field('visit_section_text',CONST_SITE_INFORMATION_PAGE_ID);
+    $back_to_menu_text = get_field('back_to_menu_text',CONST_SITE_INFORMATION_PAGE_ID);
+    $arrow_right_icon = get_field('arrow_right_icon',CONST_SITE_INFORMATION_PAGE_ID);
+?>
 <header class="header">
     <div class="header-cover">
         <div class="header-top">
@@ -49,24 +69,6 @@
                         <div class="dropdown">
                             <div class="head">
                             	<?php 
-									$en_label = get_field('en_label',CONST_SITE_INFORMATION_PAGE_ID);
-									$ar_label = get_field('ar_label',CONST_SITE_INFORMATION_PAGE_ID);
-									$header_logo = get_field('header_logo',CONST_SITE_INFORMATION_PAGE_ID);
-									$location_icon = get_field('location_icon',CONST_SITE_INFORMATION_PAGE_ID);
-									$location_icon_url = get_field('location_icon_url',CONST_SITE_INFORMATION_PAGE_ID);
-									$about_agb_title = get_field('about_agb_title',CONST_SITE_INFORMATION_PAGE_ID);
-									$about_agb_subtitle = get_field('about_agb_subtitle',CONST_SITE_INFORMATION_PAGE_ID);
-									$corporate_banking_title = get_field('corporate_banking_title',CONST_SITE_INFORMATION_PAGE_ID);
-									$corporate_banking_subtitle = get_field('corporate_banking_subtitle',CONST_SITE_INFORMATION_PAGE_ID);
-									$retail_banking_title = get_field('retail_banking_title',CONST_SITE_INFORMATION_PAGE_ID);
-									$retail_banking_subtitle = get_field('retail_banking_subtitle',CONST_SITE_INFORMATION_PAGE_ID);
-									$find_us_title = get_field('find_us_title',CONST_SITE_INFORMATION_PAGE_ID);
-									$find_us_subtitle = get_field('find_us_subtitle',CONST_SITE_INFORMATION_PAGE_ID);
-									$legal_title = get_field('legal_title',CONST_SITE_INFORMATION_PAGE_ID);
-									$legal_subtitle = get_field('legal_subtitle',CONST_SITE_INFORMATION_PAGE_ID);
-									$visit_section_text = get_field('visit_section_text',CONST_SITE_INFORMATION_PAGE_ID);
-									$back_to_menu_text = get_field('back_to_menu_text',CONST_SITE_INFORMATION_PAGE_ID);
-									$arrow_right_icon = get_field('arrow_right_icon',CONST_SITE_INFORMATION_PAGE_ID);
 									if (!empty($en_label)) 
 									{
 										?>
