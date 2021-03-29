@@ -50,6 +50,7 @@
                             <div class="head">
                             	<?php 
 									$en_label = get_field('en_label',CONST_SITE_INFORMATION_PAGE_ID);
+									$ar_label = get_field('ar_label',CONST_SITE_INFORMATION_PAGE_ID);
 									if (!empty($en_label)) 
 									{
 										?>
@@ -61,7 +62,7 @@
                             </div>
                             <ul class="dropdownMenu">
                             	<?php 
-									$en_label = get_field('en_label',CONST_SITE_INFORMATION_PAGE_ID);
+									
 									if (!empty($en_label)) 
 									{
 										?>
@@ -102,8 +103,7 @@
                             <div class="languageselector js-languageselector">
                                 <div class="dropdown">
                                     <div class="head">
-                                    	<?php 
-											$en_label = get_field('en_label',CONST_SITE_INFORMATION_PAGE_ID);
+                                    	<?php
 											if (!empty($en_label)) 
 											{
 												?>
@@ -114,8 +114,22 @@
 										?>    
                                     </div>
                                     <ul class="dropdownMenu">
-                                        <li class="txt-en"><a href="#">EN</a></li>
-                                        <li class="txt-ar"><a href="#">عربي</a></li>
+                                    	<?php
+											if (!empty($en_label)) 
+											{
+												?>
+			                                        <li class="txt-en"><a href="#"><?php echo $en_label ?></a></li>
+			                                    <?php
+											}
+										?>        
+	                                    <?php
+											if (!empty($ar_label)) 
+											{
+												?>    
+                                    				<li class="txt-ar"><a href="#"><?php echo $ar_label ?></a></li>
+                                				<?php
+											}
+										?>    
                                     </ul>
                                 </div>
                             </div>
