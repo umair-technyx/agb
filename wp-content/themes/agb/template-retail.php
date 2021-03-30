@@ -174,12 +174,11 @@ get_header();?>
 	              		  	$saving_account_service_image = $value1['saving_account_service_image'];
 						  	$saving_account_service_title = $value1['saving_account_service_title'];
 						  	$saving_account_service_description = $value1['saving_account_service_description'];
+						  	$add_class='';
+						  	$color_class='';
 						  	if($key1%2!=0)  
 							{
 								$add_class = "bg-blue";
-							}
-							if($key1%2!=0)  
-							{
 								$color_class = "txt-white";
 							}
 						  	?>
