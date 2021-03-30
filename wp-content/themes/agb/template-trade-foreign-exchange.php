@@ -1,6 +1,6 @@
 <?php
 /*
-Template Name: Finance
+Template Name: Trade And Foreign Exchange
 */
 get_header();?>
 

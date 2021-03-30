@@ -12,6 +12,9 @@
   define('PRIVACY_POLICY_PAGE_ID', 145);
   define('COOKIE_DECLARATION_PAGE_ID', 151);
   define('COVID_REGULATION_PAGE_ID', 159);
+  define('TRADE_FOREIGN_EXCHANGE_PAGE_ID', 200);
+  define('DAY_TO_DAY_PAGE_ID', 205);  
+  define('FINANCE_PAGE_ID', 207);
 
   function cc_mime_types($mimes) {
     $mimes['svg'] = 'image/svg+xml';
