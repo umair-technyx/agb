@@ -43,13 +43,13 @@
                             if (!empty($enter_email_placeholder)) 
                             {
                                 ?>
-                                    <input tpe="email" class="subscrib" placeholder="<?php echo $enter_email_placeholder ?>" required>
+                                    <input type="email" class="subscrib" id="user-email" name="user-email" placeholder="<?php echo $enter_email_placeholder ?>" required>
                                 <?php
                             }
                             if (!empty($signup_button_text)) 
                             {
                                 ?>
-                                    <button type="submit" ><?php echo $signup_button_text ?></button>
+                                    <button type="submit" class="submit-btn"><?php echo $signup_button_text ?></button>
                                 <?php
                             }
                         ?>    
@@ -184,6 +184,38 @@
     };
 </script>
 <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/js/scripts.min.js?v=1.0.0"></script>
+<script type="text/javascript">
+    var nonce = "<?php echo wp_create_nonce("user_nonce") ?>";
+    $('.submit-btn').click(function(event)
+        {
+           event.preventDefault();
+            var user_email = jQuery("#user-email").val();
+            var dataString = {
+                user_email:user_email,
+                
+                action:'request_information'
+            };
+            $.ajax(
+            {
+                type:"POST",
+                url: "<?php echo admin_url('admin-ajax.php'); ?>",
+                data:dataString,
+                nonce: nonce,
+                success: function(result)
+                {   
+                    result = jQuery.parseJSON(result);
+                    if(result.status==1)
+                    {   
+                        console.log(result);
+                    }
+                    else
+                    {   
+                        console.log(result.response);
+                    }
+                }
+            });  
+        });
+</script>
     </body>
 
 </html>
