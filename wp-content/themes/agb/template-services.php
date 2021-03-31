@@ -1,6 +1,6 @@
 <?php
 /*
-Template Name: Trade & Foreign Exchange
+Template Name: Services Page
 */
 get_header();?>
 
@@ -23,7 +23,7 @@ get_header();?>
 </section>
  -->
 
-<section class="sec-padded--head">
+<section class="sec-padded--head2 pb-0">
     <div class="sec-corporate-agb">
         <div class="container container-expanded">
             <div class="post-agb-wrapper">
@@ -32,14 +32,14 @@ get_header();?>
 					    $page_title = get_field('page_title');
 					    if(!empty($page_title)){
 						    ?>
-						    	<div class="item-txt-blue">
+						    	<div class="style-content">
 			                        <span><?php echo $page_title ?></span>
 			                    </div>
 						    <?php
 					    }
 					    else{
 					    	?>
-						    	<div class="item-txt-blue">
+						    	<div class="style-content">
 			                        <span><?php echo get_the_title(); ?></span>
 			                    </div>
 						    <?php
@@ -89,12 +89,6 @@ get_header();?>
 
 <section class="sec-services side-bar">
   <div class="tabs-fix-wrap">
-
-  	<?php
-  		
-
-
-  	?>
     <div class="container container-expanded">
       <ul class="nav nav-pills mb-3 desktop-view" id="pills-tab" role="tablist">
 
@@ -124,21 +118,7 @@ get_header();?>
       		
 
       	?>
-          <!-- <li class="nav-item">
-          <a class="nav-link active" id="import-tab" data-toggle="pill" href="#import" role="tab" aria-controls="import" aria-selected="true">Import Services</a>
-          </li>
-          <li class="nav-item">
-          <a class="nav-link" id="export-tab" data-toggle="pill" href="#export" role="tab" aria-controls="export" aria-selected="false">Export Services</a>
-          </li>
-          <li class="nav-item">
-          <a class="nav-link" id="bankers-guarantee-tab" data-toggle="pill" href="#bankers-guarantee" role="tab" aria-controls="bankers-guarantee" aria-selected="false">Banker’s Guarantee</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" id="trade-document-tab" data-toggle="pill" href="#trade-document" role="tab" aria-controls="trade-document" aria-selected="false">Trade Document Counters</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" id="foreign-exchange-tab" data-toggle="pill" href="#foreign-exchange" role="tab" aria-controls="foreign-exchange" aria-selected="false">Foreign Exchange</a>
-          </li> -->
+          
       </ul>
     </div>
   </div>
@@ -164,8 +144,6 @@ get_header();?>
 	      			$get_in_touch_button_text = $row['get_in_touch_button_text'];
 	      			$get_in_touch_url = $row['get_in_touch_url'];
 	      			$service_id = generate_id_by_title($service_title);
-
-
 	      			
 	      			
 	      			if (empty($row['get_in_touch_url'])) 

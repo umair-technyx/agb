@@ -22,6 +22,28 @@
   }
   add_filter('upload_mimes', 'cc_mime_types');
 
+
+
+add_action( 'init', 'creatPosttype' );
+
+function creatPosttype()
+{
+    register_post_type( 'service',
+        array(
+            'labels' => array(
+                'name' => __('Services'),
+                'singular_name' => __('Service')
+            ),
+            'public' => true,
+            'has_archive' => false,
+            'show_in_rest' => true,
+            'rewrite' => array('slug' => 'service'),
+            // 'supports' => array('title', 'thumbnail')
+
+        )
+    );
+}
+
   function dd($array)
   {
       echo "<pre>";
@@ -68,4 +90,14 @@
         $wp_admin_bar->add_node( $menu_args );
     }
   }
+
+
+
+function generate_id_by_title($str, $sep='_')
+{
+  $res = strtolower($str);
+  $res = preg_replace('/[^[:alnum:]]/', ' ', $res);
+  $res = preg_replace('/[[:space:]]+/', $sep, $res);
+  return trim($res, $sep);
+}
 ?>
