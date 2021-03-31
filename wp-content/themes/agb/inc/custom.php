@@ -97,4 +97,34 @@
 
     return $text;
   }
+
+
+add_action("wp_ajax_request_information", "RequestInformation");
+add_action("wp_ajax_nopriv_request_information", "RequestInformation");
+
+function RequestInformation()
+{
+  if(isset($_POST['nonce'])) 
+  {
+    $checkNonce = checkNonce($_POST['nonce']);
+    if ($checkNonce == false) 
+    {
+        json_response(array('status' =>0 ,'response'=>'Invalid Token' ));
+    }
+
+  }
+  if (empty($_POST['user_email'])) 
+  {
+    json_response(array('status' =>0 ,'response'=>'Kindly Insert Your Email!' ));
+  }
+
+  $data = array();
+  $data['email'] = $_POST['user_email'];
+  $data['created']    = date('Y-m-d H:i:s');
+  global $wpdb;
+  $insert = $wpdb->insert( 'subscribers_log', $data);
+
+  json_response(array('status' =>1 ,'response'=>'Form Submitted Successfully', 'data' => $data));
+}
+
 ?>
