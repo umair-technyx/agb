@@ -225,10 +225,10 @@
                                             <div class="c-megaMenu-left">
                                                 <div class="megamenu-content for-desktop">
                                                     <h2 class="h2"><?php echo  $page_title ?></h2>
-                                                    <a href="../agb-corporate" class="btn btn-link"><?php echo  $visit_button_text ?> <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a>
+                                                    <a href="<?php echo  $page_url; ?>" class="btn btn-link"><?php echo  $visit_button_text ?> <img src="<?php echo get_template_directory_uri(); ?>/assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a>
                                                 </div>
                                             </div>
-                                            <a href="#" class="go-back js-goBack"><img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"> Back to Menu</a>
+                                            <a href="#" class="go-back js-goBack"><img src="<?php echo get_template_directory_uri(); ?>/assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"> Back to Menu</a>
                                             <?php 
                                             if (!empty($mega_menu)) 
                                             {
@@ -236,7 +236,7 @@
                                                     <div class="c-megaMenu-right js-custom-scroll-bar">
                                                         <div class="megamenu-links multi">
                                                             <ul class="mbl-only">
-                                                                <li class="mbl-only"><a href="../agb-corporate"><?php echo  $page_titl; ?><span><?php echo  $visit_button_text; ?></span> <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
+                                                                <li class="mbl-only"><a href="<?php echo  $page_url; ?>"><?php echo  $page_title; ?><span><?php echo  $visit_button_text; ?></span> <img src="<?php echo get_template_directory_uri(); ?>/assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
                                                             </ul>
                                                             <?php 
                                                                 foreach ($sub_menus as $key => $row2) 
@@ -248,11 +248,18 @@
                                                                             <?php 
                                                                                 foreach ($menu_column as $key => $row3) 
                                                                                 {
+                                                                                    $hashtag = '';
                                                                                     $sub_page_title = $row3['page_title'];
                                                                                     $sub_page_url = $row3['page_url'];
+                                                                                    
+                                                                                    if (!empty($row3['hashtag'])) 
+                                                                                    {
+                                                                                       $hashtag = $row3['hashtag'];
+                                                                                    }
+
 
                                                                                     ?>
-                                                                                        <li><a href="<?php echo  $sub_page_url; ?>"><?php echo  $sub_page_title; ?><img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
+                                                                                        <li><a href="<?php echo  $sub_page_url.$hashtag; ?>"><?php echo  $sub_page_title; ?><img src="<?php echo get_template_directory_uri(); ?>/assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
 
                                                                                     <?php
                                                                                 }
