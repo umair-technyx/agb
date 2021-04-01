@@ -215,7 +215,7 @@ get_header();?>
 	                    elseif($select_layout == 'layout_2') 
 						{
 			      			?>
-								<div class="tab-pane fade" id="<?php echo $service_id; ?>" role="tabpanel" data-parent="#accordion" aria-labelledby="<?php echo $service_id; ?>-tab">
+								<div class="tab-pane fade <?php echo $activeClass; ?>" id="<?php echo $service_id; ?>" role="tabpanel" data-parent="#accordion" aria-labelledby="<?php echo $service_id; ?>-tab">
 									<div class="service-detail">
 									    <div class="sec-content">
 									        <div class="row">
