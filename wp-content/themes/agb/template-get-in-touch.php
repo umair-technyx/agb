@@ -304,13 +304,46 @@ get_header();?>
                                         <div class="services-info">
                                             <div class="contact-info">
                                                 <div class="contact">
-                                                    <span>Contact Number</span>
-                                                    <p>T: +990 222 4445</p>
+                                                	<?php
+											            if (!empty($contact_number_title))
+											            {
+											              	?>
+			                                                    <span><?php echo $contact_number_title; ?></span>
+		                                                    <?php
+														}
+														if (!empty($call_center_contact_numbers))
+											            {
+															foreach ($call_center_contact_numbers as $key4 => $value4)
+															{
+																$call_center_contact_number = $value4['call_center_contact_number'];
+																?>
+																	<p><?php echo $call_center_contact_number; ?></p>
+																<?php
+															}
+														}
+													?>        
                                                 </div>
                                                 <div class="hours">
-                                                    <span>Working Hours</span>
-                                                    <p class="mt-15">08:00 AM - 03:00 PM </p>
-                                                    <p>Monday to Friday</p>
+                                                	<?php
+											            if (!empty($working_hours_title))
+											            {
+											              	?>
+                                                    			<span><?php echo $working_hours_title; ?></span>
+                                                			<?php
+														}
+														if (!empty($call_center_working_time))
+											            {
+															foreach ($call_center_working_time as $key5 => $value5)
+															{
+																$call_center_working_hours = $value5['call_center_working_hours'];
+																$call_center_working_days = $value5['call_center_working_days'];
+																?>
+				                                                    <p class="mt-15"><?php echo $call_center_working_hours; ?></p>
+				                                                    <p><?php echo $call_center_working_days; ?></p>
+			                                                    <?php
+															}
+														}
+													?>      
                                                 </div>
                                             </div>
                                         </div>
@@ -344,13 +377,46 @@ get_header();?>
                                         <div class="services-info">
                                             <div class="contact-info">
                                                 <div class="contact">
-                                                    <span>Contact Number</span>
-                                                    <p>T: +990 222 4445</p>
+                                                	<?php
+											            if (!empty($contact_number_title))
+											            {
+											              	?>
+			                                                    <span><?php echo $contact_number_title; ?></span>
+		                                                    <?php
+														}
+														if (!empty($atm_location_contact_numbers))
+											            {
+															foreach ($atm_location_contact_numbers as $key6 => $value6)
+															{
+																$atm_location_contact_number = $value6['atm_location_contact_number'];
+																?>
+				                                                    <p><?php echo $atm_location_contact_number; ?></p>
+			                                                    <?php
+															}
+														}
+													?>      
                                                 </div>
                                                 <div class="hours">
-                                                    <span>Working Hours</span>
-                                                    <p class="mt-15">08:00 AM - 03:00 PM </p>
-                                                    <p>Monday to Friday</p>
+                                                	<?php
+											            if (!empty($working_hours_title))
+											            {
+											              	?>
+                                                    			<span><?php echo $working_hours_title; ?></span>
+                                                			<?php
+														}
+														if (!empty($atm_location_working_time))
+											            {
+															foreach ($atm_location_working_time as $key7 => $value7)
+															{
+																$atm_location_working_hours = $value7['atm_location_working_hours'];
+																$atm_location_working_days = $value7['atm_location_working_days'];
+																?>
+				                                                    <p class="mt-15"><?php echo $atm_location_working_hours; ?></p>
+				                                                    <p><?php echo $atm_location_working_days; ?></p>
+			                                                    <?php
+															}
+														}
+													?>     
                                                 </div>
                                             </div>
                                         </div>
@@ -384,13 +450,46 @@ get_header();?>
                                         <div class="services-info">
                                             <div class="contact-info">
                                                 <div class="contact">
-                                                    <span>Contact Number</span>
-                                                    <p>T: +990 222 4445</p>
+                                                	<?php
+											            if (!empty($contact_number_title))
+											            {
+											              	?>
+                                                    			<span><?php echo $contact_number_title; ?></span>
+                                                			<?php
+														}
+														if (!empty($ask_questions_contact_numbers))
+											            {
+															foreach ($ask_questions_contact_numbers as $key8 => $value8)
+															{
+																$ask_questions_contact_number = $value8['ask_questions_contact_number'];
+																?>
+	                                                    			<p><?php echo $ask_questions_contact_number; ?></p>
+	                                                			<?php
+															}
+														}
+													?>      
                                                 </div>
                                                 <div class="hours">
-                                                    <span>Working Hours</span>
-                                                    <p class="mt-15">08:00 AM - 03:00 PM </p>
-                                                    <p>Monday to Friday</p>
+                                                	<?php
+											            if (!empty($working_hours_title))
+											            {
+											              	?>
+                                                    			<span><?php echo $working_hours_title; ?></span>
+                                                			<?php
+														}
+														if (!empty($ask_questions_working_time))
+											            {
+															foreach ($ask_questions_working_time as $key9 => $value9)
+															{
+																$ask_questions_working_hours = $value9['ask_questions_working_hours'];
+																$ask_questions_working_days = $value9['ask_questions_working_days'];
+																?>
+				                                                    <p class="mt-15"><?php echo $ask_questions_working_hours; ?></p>
+				                                                    <p><?php echo $ask_questions_working_days; ?></p>
+			                                                    <?php
+															}
+														}
+													?>      
                                                 </div>
                                             </div>
                                         </div>

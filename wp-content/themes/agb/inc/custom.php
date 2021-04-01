@@ -22,12 +22,33 @@
   }
   add_filter('upload_mimes', 'cc_mime_types');
 
+
+
+add_action( 'init', 'creatPosttype' );
+
+function creatPosttype()
+{
+    register_post_type( 'service',
+        array(
+            'labels' => array(
+                'name' => __('Services'),
+                'singular_name' => __('Service')
+            ),
+            'public' => true,
+            'has_archive' => false,
+            'show_in_rest' => true,
+            'rewrite' => array('slug' => 'service'),
+            // 'supports' => array('title', 'thumbnail')
+
+        )
+    );
+}
+
   function dd($array)
   {
       echo "<pre>";
       print_r($array);
       echo "</pre>";
-      die;
   }
 
   function json_response($response = array()){
@@ -70,6 +91,17 @@
     }
   }
 
+
+
+
+function generate_id_by_title($str, $sep='_')
+{
+  $res = strtolower($str);
+  $res = preg_replace('/[^[:alnum:]]/', ' ', $res);
+  $res = preg_replace('/[[:space:]]+/', $sep, $res);
+  return trim($res, $sep);
+}
+
   //PHP function to make slug (URL string)
   function slugify($text)
   {
@@ -104,6 +136,10 @@ add_action("wp_ajax_nopriv_request_information", "RequestInformation");
 
 function RequestInformation()
 {
+  $error_message = get_field('error_message',CONST_SITE_INFORMATION_PAGE_ID);
+  $sucess_message = get_field('sucess_message',CONST_SITE_INFORMATION_PAGE_ID);
+  $already_subscribed_message  = get_field('already_subscribed_message',CONST_SITE_INFORMATION_PAGE_ID);
+  
   if(isset($_POST['nonce'])) 
   {
     $checkNonce = checkNonce($_POST['nonce']);
@@ -111,11 +147,18 @@ function RequestInformation()
     {
         json_response(array('status' =>0 ,'response'=>'Invalid Token' ));
     }
-
   }
+
   if (empty($_POST['user_email'])) 
   {
-    json_response(array('status' =>0 ,'response'=>'Kindly Insert Your Email!' ));
+    json_response(array('status' =>0 ,'response'=>$error_message ));
+  }
+
+  global $wpdb;
+  $datum = $wpdb->get_results("SELECT * FROM subscribers_log WHERE email = '".$_POST['user_email']."'");
+  if($wpdb->num_rows > 0)
+  {
+    json_response(array('status' =>0 ,'response'=>$already_subscribed_message ));
   }
 
   $data = array();
@@ -124,7 +167,7 @@ function RequestInformation()
   global $wpdb;
   $insert = $wpdb->insert( 'subscribers_log', $data);
 
-  json_response(array('status' =>1 ,'response'=>'Form Submitted Successfully', 'data' => $data));
+  json_response(array('status' =>1 ,'response'=>$sucess_message, 'data' => $data));
 }
 
 ?>
