@@ -20,20 +20,11 @@ get_header();?>
   	$branches = get_field('branches');
 	  	
   	$call_center_contact_numbers = get_field('call_center_contact_numbers');
-  		// call_center_contact_number
 	$call_center_working_time = get_field('call_center_working_time');
-		// call_center_working_hours
-		// call_center_working_days
 	$atm_location_contact_numbers = get_field('atm_location_contact_numbers');
-		// atm_location_contact_number
 	$atm_location_working_time = get_field('atm_location_working_time');
-		// atm_location_working_hours
-		// atm_location_working_days
 	$ask_questions_contact_numbers = get_field('ask_questions_contact_numbers');
-		// ask_questions_contact_number
 	$ask_questions_working_time = get_field('ask_questions_working_time');
-		// ask_questions_working_hours
-		// ask_questions_working_days
 
 ?>
 <section class="sec-padded--head">
