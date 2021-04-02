@@ -26,8 +26,14 @@
     <link rel="manifest" href="/site.webmanifest">
     <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/css/style.min.css">
 </head>
-
-    <body>
+    <?php
+        $addClass_breadcrumb = '';
+        if (get_the_ID() == TRADE_FOREIGN_EXCHANGE_PAGE_ID || get_the_ID() == DAY_TO_DAY_PAGE_ID || get_the_ID() == FINANCE_PAGE_ID) 
+        {
+           $addClass_breadcrumb = 'has--breadcrumb';
+        }
+    ?>
+    <body class="<?php echo $addClass_breadcrumb; ?>">
         <!--[if lte IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
@@ -172,7 +178,8 @@
 
                                 <?php 
                                     $mega_menu = get_field('mega_menu',CONST_SITE_INFORMATION_PAGE_ID);
-                                    // dd($mega_menu);
+                                    //dd($mega_menu);
+                                    $temp = array();
                                     if (!empty($mega_menu)) 
                                     {
                                         foreach ($mega_menu as $key1 => $row) {
@@ -198,8 +205,10 @@
                                                 <li class="<?php echo  $addClass_active; ?>"><a href="<?php echo  $page_url; ?>" class="js-sub-menu-anchor <?php echo  $addClass ?>" data-target="<?php echo  $target_id; ?>"><?php echo  $page_title ?> <span><?php echo  $sub_title ?></span> </a></li>
 
                                             <?php 
-
+                                        $temp[] = $page_url;
                                         }
+                                        // print_r($temp);
+                                        // echo get_page_link();
                                     }
 
                                 ?>
@@ -438,18 +447,75 @@
                     <div class="info-wrapper">
                         <div class="breadcrumb-info">
                             <div class="info-box1">
-                                <a href="../agb-corporate">Corporate Banking</a>
+                                <?php
+                                    $corporate_title = get_the_title(CORPORATE_PAGE_ID);
+                                    $corporate_url = get_permalink(CORPORATE_PAGE_ID);
+                                    if (!empty($corporate_title))
+                                    {
+                                        ?>
+                                            <a href="<?php echo $corporate_url ?>"><?php echo $corporate_title ?></a>
+                                        <?php
+                                    }
+                                ?>
                             </div>
                         </div>
                         <div class="breadcrumb-info">
-                            <div class="breadcrumb-links">
-                                <a href="../trade-foreign-exchange">Trade Product and Services</a>
+                            <?php
+                                $active_class_breadcrumb = '';
+                                if (get_the_ID() == TRADE_FOREIGN_EXCHANGE_PAGE_ID)
+                                {
+                                    $active_class_breadcrumb = 'active';
+                                }
+                            ?>
+                            <div class="breadcrumb-links <?php echo $active_class_breadcrumb; ?>">
+                                <?php
+                                    $trade_title = get_the_title(TRADE_FOREIGN_EXCHANGE_PAGE_ID);
+                                    $trade_url = get_permalink(TRADE_FOREIGN_EXCHANGE_PAGE_ID);
+                                    if (!empty($trade_title))
+                                    {
+                                        ?>
+                                            <a href="<?php echo $trade_url ?>"><?php echo $trade_title ?></a>
+                                        <?php
+                                    }
+                                ?>
                             </div>
-                            <div class="breadcrumb-links">
-                                <a href="../day-to-day/index.html">Day To Day</a>
+                            <?php
+                                $active_class_breadcrumb = '';
+                                if (get_the_ID() == DAY_TO_DAY_PAGE_ID)
+                                {
+                                    $active_class_breadcrumb = 'active';
+                                }
+                            ?>
+                            <div class="breadcrumb-links <?php echo $active_class_breadcrumb; ?>">
+                                <?php
+                                    $day_to_day_title = get_the_title(DAY_TO_DAY_PAGE_ID);
+                                    $day_to_day_url = get_permalink(DAY_TO_DAY_PAGE_ID);
+                                    if (!empty($day_to_day_title))
+                                    {
+                                        ?>
+                                            <a href="<?php echo $day_to_day_url ?>"><?php echo $day_to_day_title ?></a>
+                                        <?php
+                                    }
+                                ?>
                             </div>
-                            <div class="breadcrumb-links">
-                                <a href="../finance">Finance</a>
+                            <?php
+                                $active_class_breadcrumb = '';
+                                if (get_the_ID() == FINANCE_PAGE_ID)
+                                {
+                                    $active_class_breadcrumb = 'active';
+                                }
+                            ?>
+                            <div class="breadcrumb-links <?php echo $active_class_breadcrumb; ?>">
+                                <?php
+                                    $finance_title = get_the_title(FINANCE_PAGE_ID);
+                                    $finance_url = get_permalink(FINANCE_PAGE_ID);
+                                    if (!empty($finance_title))
+                                    {
+                                        ?>
+                                            <a href="<?php echo $finance_url ?>"><?php echo $finance_title ?></a>
+                                        <?php
+                                    }
+                                ?>
                             </div>
                         </div>
                     </div>

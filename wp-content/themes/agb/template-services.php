@@ -28,25 +28,7 @@ get_header();?>
         <div class="container container-expanded">
             <div class="post-agb-wrapper">
                 <div class="post-agb-content">
-                	<?php 
-					    $page_title = get_field('page_title');
-					    if(!empty($page_title)){
-						    ?>
-						    	<div class="style-content">
-			                        <span><?php echo $page_title ?></span>
-			                    </div>
-						    <?php
-					    }
-					    else{
-					    	?>
-						    	<div class="style-content">
-			                        <span><?php echo get_the_title(); ?></span>
-			                    </div>
-						    <?php
-					    }
-
-					 ?>
-                    
+                	                    
                     <div class="style-content">
                     	<?php 
 						    $heading = get_field('heading');
