@@ -1,27 +1,7 @@
 <?php
-/*
-Template Name: Services Page
-*/
-get_header();?>
 
-<!-- <section class="sec-padded--head2 pb-0">
-    <div class="sec-corporate-agb">
-        <div class="container container-expanded">
-            <div class="post-agb-wrapper">
-                <div class="post-agb-content">
-                    <div class="style-content">
-                        <h1 class="h2">Trade Product And Services</h1>
-                        <p>Africa and Gulf Bank (AGB) is a financial institution that helps SMEs, large corporations, investors, sponsors, and individuals searching for sustainable models realize their projects by offering an array of customized and innovative financial solutions backed by cutting-edge tools and technologies.</p>
-                    </div>
-                </div>
-                <div class="post-agb-img">
-                    <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/bg/bg-sty3.jpg">
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
- -->
+get_header();
+?>
 
 <section class="sec-padded--head2 pb-0">
     <div class="sec-corporate-agb">
@@ -30,8 +10,8 @@ get_header();?>
                 <div class="post-agb-content">
                     <div class="style-content">
                     	<?php 
-						    $heading = get_field('heading');
-						    $description = get_field('description');
+						    $heading = get_field('heading',TRADE_FOREIGN_EXCHANGE_PAGE_ID);
+						    $description = get_field('description',TRADE_FOREIGN_EXCHANGE_PAGE_ID);
 						    if(!empty($heading)){
 							    ?>
 							    	<h1 class="h2"><?php echo $heading; ?></h1>
@@ -50,7 +30,7 @@ get_header();?>
                     </div>
                 </div>
                 <?php 
-				    $banner_image = get_field('banner_image');
+				    $banner_image = get_field('banner_image',TRADE_FOREIGN_EXCHANGE_PAGE_ID);
 				    if(!empty($banner_image))
 				    {
 					    ?>
@@ -69,36 +49,36 @@ get_header();?>
 
 
 <section class="sec-services side-bar">
-  	<div class="tabs-fix-wrap">
-	    <div class="container container-expanded">
-	      <ul class="nav nav-pills mb-3 desktop-view" id="pills-tab" role="tablist">
-	      	<?php
-	      		$services = get_field('services');
-	      		if (!empty($services)) 
+  <div class="tabs-fix-wrap">
+    <div class="container container-expanded">
+      <ul class="nav nav-pills mb-3 desktop-view" id="pills-tab" role="tablist">
+      <ul class="nav nav-pills mb-3 page-tabs" id="pills-tab" role="tablist">
+      	<?php
+      		$services = get_field('services',TRADE_FOREIGN_EXCHANGE_PAGE_ID);
+      		if (!empty($services)) 
+      		{
+      			foreach ($services as $key => $row) 
 	      		{
-	      			foreach ($services as $key => $row) 
-		      		{
-		      			$service_title = $row['service_title'];
-		      			$service_id = generate_id_by_title($service_title);
+	      			$service_title = $row['service_title'];
+	      			$service_id = generate_id_by_title($service_title);
 
-		      			
-		      			$activeClass = '';
-	                    if ($key == 0 ) 
-	                    {
-	                       $activeClass = 'active';
-	                    }
-		      			?>
-		      				<li class="nav-item">
-					          <a class="nav-link <?php echo $activeClass; ?> " id="<?php echo $service_id; ?>-tab" data-toggle="pill" href="#<?php echo $service_id; ?>" role="tab" aria-controls="<?php echo $service_id; ?>" aria-selected="true"><?php echo $service_title; ?></a>
-					        </li>
+	      			
+	      			$activeClass = '';
+                    if ($key == 0 ) 
+                    {
+                       $activeClass = 'active';
+                    }
+	      			?>
+	      				<li class="nav-item">
+				          <a class="nav-link <?php echo $activeClass; ?> " id="<?php echo $service_id; ?>-tab" data-toggle="pill" href="#<?php echo $service_id; ?>" role="tab" aria-controls="<?php echo $service_id; ?>" aria-selected="true"><?php echo $service_title; ?></a>
+				        </li>
 
-		      			<?php
-		      		}
+	      			<?php
 	      		}
-	      	?>
-	      </ul>
-	    </div>
-  	</div>
+      		}
+      	?>
+      </ul>
+    </div>
     <div class="container container-expanded">
       	<div class="tab-content services" id="accordion">
 
@@ -143,56 +123,7 @@ get_header();?>
 							</h5>
 			            </div>
 
-                    <?php
-	                    if ($select_layout == 'layout_1') 
-	                    {
-	                    	?>
-	                    	
-				            <div class="tab-pane fade  <?php echo $activeClass; ?>" id="<?php echo $service_id; ?>" role="tabpanel" data-parent="#accordion" aria-labelledby="<?php echo $service_id; ?>-tab">
-				                <div class="service-detail">
-				                    <div class="sec-head">
-				                        <h2><?php echo $service_title; ?></h2>
-				                        <p><?php echo $service_description; ?></p>
-				                    </div>
-				                    <div class="post-services">
-
-				                    	<?php
-								      		if (!empty($services_listing)) 
-								      		{
-								      			foreach ($services_listing as $key1 => $row1) 
-									      		{
-		      										$service_select = $row1['service_select'];
-		      										$post_id = $service_select;
-		      										$post_title = get_the_title($post_id);
-		      										$post_title = get_field('service_title',$post_id);
-		      										$short_description = get_field('short_description',$post_id);
-		      										$featured_image = get_field('featured_image',$post_id);
-		      										$post_url = get_permalink($post_id);
-									      			?>
-							                        <div class="post-detail">
-							                            <div class="post-image">
-							                                <img src="<?php echo $featured_image; ?>">
-							                            </div>
-							                            <div class="post-description">
-							                                <h3><?php echo $post_title; ?></h3>
-							                                <p><?php echo $short_description; ?></p>
-							                                <a href="<? echo $post_url;?>" class="btn btn-link"><img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/btn-arrow.svg" alt=">" class="js-tosvg tosvg">Learn More</a>
-							                            </div>
-							                        </div>
-							                        <?php
-							                    }
-							                }
-							            ?>
-				                    </div>
-				                </div>
-				            </div>
-
-	                    	<?php
-	                    }
-	                    elseif($select_layout == 'layout_2') 
-						{
-			      			?>
-								<div class="tab-pane fade <?php echo $activeClass; ?>" id="<?php echo $service_id; ?>" role="tabpanel" data-parent="#accordion" aria-labelledby="<?php echo $service_id; ?>-tab">
+                    									<div class="tab-pane fade <?php echo $activeClass; ?>" id="<?php echo $service_id; ?>" role="tabpanel" data-parent="#accordion" aria-labelledby="<?php echo $service_id; ?>-tab">
 									<div class="service-detail">
 									    <div class="sec-content">
 									        <div class="row">
@@ -269,14 +200,15 @@ get_header();?>
 									    </div>
 									</div>
 								</div>
-			      			<?php
+	                    
+			      			
 	      			}
 	      		}
       		}
       	?>
       	</div>
     </div>
-</section>
+  </div>
 
 
 <?php get_footer(); ?>

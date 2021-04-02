@@ -42,6 +42,38 @@ function creatPosttype()
 
         )
     );
+
+    register_post_type( 'foreign-exchange',
+        array(
+            'labels' => array(
+                'name' => __('Trade Foreign Exchange'),
+                'singular_name' => __('Trade Foreign Exchange')
+            ),
+            'public' => true,
+            'has_archive' => false,
+            'show_in_rest' => true,
+            'rewrite' => array('slug' => 'trade-foreign-exchange'),
+            // 'supports' => array('title', 'thumbnail')
+
+        )
+    );
+
+    register_post_type( 'day-to-day',
+        array(
+            'labels' => array(
+                'name' => __('Day To Day'),
+                'singular_name' => __('Day To Day')
+            ),
+            'public' => true,
+            'has_archive' => false,
+            'show_in_rest' => true,
+            'rewrite' => array('slug' => 'day-to-day'),
+            // 'supports' => array('title', 'thumbnail')
+
+        )
+    );
+
+    
 }
 
   function dd($array)
