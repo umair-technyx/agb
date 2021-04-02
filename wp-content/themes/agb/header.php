@@ -178,8 +178,7 @@
 
                                 <?php 
                                     $mega_menu = get_field('mega_menu',CONST_SITE_INFORMATION_PAGE_ID);
-                                    //dd($mega_menu);
-                                    $temp = array();
+                                    // dd($mega_menu);
                                     if (!empty($mega_menu)) 
                                     {
                                         foreach ($mega_menu as $key1 => $row) {
@@ -205,10 +204,8 @@
                                                 <li class="<?php echo  $addClass_active; ?>"><a href="<?php echo  $page_url; ?>" class="js-sub-menu-anchor <?php echo  $addClass ?>" data-target="<?php echo  $target_id; ?>"><?php echo  $page_title ?> <span><?php echo  $sub_title ?></span> </a></li>
 
                                             <?php 
-                                        $temp[] = $page_url;
+
                                         }
-                                        // print_r($temp);
-                                        // echo get_page_link();
                                     }
 
                                 ?>
