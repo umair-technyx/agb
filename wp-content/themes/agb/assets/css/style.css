@@ -15500,7 +15500,7 @@ p {
           @media (max-width: 991px) {
             .header-cover .sec-header .navigation ul li:last-child:after {
               display: block; } }
-          .header-cover .sec-header .navigation ul li:hover a:before {
+          .header-cover .sec-header .navigation ul li:hover a:before, .header-cover .sec-header .navigation ul li.active a:before {
             width: 80%; }
       @media (max-width: 991px) {
         .header-cover .sec-header .navigation {
@@ -16200,7 +16200,7 @@ body.has--breadcrumb .header-breadcrumb {
         transition: all 0.35s ease; }
       .header-breadcrumb .banking-info .info-wrapper .breadcrumb-links:first-child::before {
         display: none; }
-      .header-breadcrumb .banking-info .info-wrapper .breadcrumb-links:hover:after {
+      .header-breadcrumb .banking-info .info-wrapper .breadcrumb-links:hover:after, .header-breadcrumb .banking-info .info-wrapper .breadcrumb-links.active:after {
         width: 100%; }
 
 .mCSB_inside > .mCSB_container {

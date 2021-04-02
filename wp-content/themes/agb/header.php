@@ -187,9 +187,15 @@
                                             if ($key1 == 0 ) 
                                             {
                                                $addClass = 'has-no-child';
+                                            } 
+                                            $addClass_active = '@@'.$target_id;
+                                            if(get_page_link() == $page_url) 
+                                            {
+                                               $addClass_active  = 'active';
+
                                             }
                                             ?>
-                                                <li class="@@<?php echo  $target_id; ?>"><a href="<?php echo  $page_url; ?>" class="js-sub-menu-anchor <?php echo  $addClass ?>" data-target="<?php echo  $target_id; ?>"><?php echo  $page_title ?> <span><?php echo  $sub_title ?></span> </a></li>
+                                                <li class="<?php echo  $addClass_active; ?>"><a href="<?php echo  $page_url; ?>" class="js-sub-menu-anchor <?php echo  $addClass ?>" data-target="<?php echo  $target_id; ?>"><?php echo  $page_title ?> <span><?php echo  $sub_title ?></span> </a></li>
 
                                             <?php 
 
