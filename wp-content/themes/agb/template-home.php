@@ -314,8 +314,14 @@ get_header();?>
                         ?>
                       </h5>
                     </div>
-                
-                    <div id="collapse<?php echo $key3;?>" class="collapse show" aria-labelledby="heading<?php echo $key3;?>" data-parent="#accordion">
+                    <?php 
+                      $show_class = '';
+                      if ($key3 == 0)
+                      {
+                        $show_class = 'show';
+                      }
+                    ?>
+                    <div id="collapse<?php echo $key3;?>" class="collapse <?php echo $show_class; ?>" aria-labelledby="heading<?php echo $key3;?>" data-parent="#accordion">
                       <div class="card-body">
                           <div class="post-box">
                               <div class="sec-content">
