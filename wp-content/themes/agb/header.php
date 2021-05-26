@@ -1,33 +1,125 @@
 <!doctype html>
-<html lang="en" dir="ltr">
 
+
+<?php
+
+    $currentPageID = get_the_ID();
+
+    $siteID = get_current_blog_id();
+
+    $englishURL = get_site_url(CONST_AGB_EN_SITE_ID);
+
+    $arabicURL = get_site_url(CONST_AGB_AR_SITE_ID);
+    
+
+    if($siteID == CONST_AGB_EN_SITE_ID)
+
+    {
+
+        $lang = 'en';
+
+        $dir = 'ltr';
+
+    }
+
+    if($siteID == CONST_AGB_AR_SITE_ID)
+
+    {
+
+        $lang = 'ar';
+
+        $dir = 'rtl';
+
+    }
+
+
+
+?>
+
+<html class="no-js" lang="<?php echo $lang ?>" dir="<?php echo $dir ?>">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>
     	<?php 
-	        $siteID = get_the_ID();
-	        if(is_front_page())
-	        {
-	            echo bloginfo( 'name' );echo ' - '; echo get_the_title(26);
-	        }
+	       if(is_front_page())
+
+            {
+
+                echo bloginfo( 'name' );
+
+            }
 	        else
 	        {
-	            bloginfo( 'name' ); echo ' - '; wp_title('');
+                if($siteID == CONST_AGB_EN_SITE_ID)
+
+                {
+
+                     $level1Title = str_replace("&amp;", "&", get_the_title());
+
+                    $level1Title = html_entity_decode($level1Title);
+
+                    $level1Title = str_replace("–", "-", $level1Title);
+
+                    echo $level1Title; echo ' | ';  bloginfo( 'name' );
+
+                }
+
+                if($siteID == CONST_AGB_AR_SITE_ID)
+
+                {
+
+                     $level1Title = str_replace("&amp;", "&", get_the_title());
+                    $level1Title = html_entity_decode($level1Title);
+                    $level1Title = str_replace("–", "-", $level1Title);
+
+                    // echo $level1Title; echo ' | ';  bloginfo( 'name' );
+                    echo bloginfo( 'name' ) .' | '; echo $level1Title; 
+                }
+                
 	        }
         ?>
     </title>
     <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="<?php echo get_template_directory_uri(); ?>/assets/img/favicon/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="<?php echo get_template_directory_uri(); ?>/assets/img/brand/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="<?php echo get_template_directory_uri(); ?>/assets/img/brand/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="<?php echo get_template_directory_uri(); ?>/assets/img/brand/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/css/style.min.css">
-</head>
+    <!-- <link rel="manifest" href="/site.webmanifest"> -->
 
-    <body>
+    <?php
+
+    
+
+    if($siteID == CONST_AGB_EN_SITE_ID)
+    {
+        ?>
+            <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/css/style.min.css?v=<?php echo CONST_CSS_VERSION?>">
+        <?php
+
+    }
+    if($siteID == CONST_AGB_AR_SITE_ID)
+    {
+        ?>
+            <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/css/style-rtl.min.css?v=<?php echo CONST_CSS_VERSION?>">
+        <?php
+
+    }
+
+
+?>
+
+    
+</head>
+    <?php
+        $addClass_breadcrumb = '';
+        if (get_the_ID() == TRADE_FOREIGN_EXCHANGE_PAGE_ID || get_the_ID() == DAY_TO_DAY_PAGE_ID || get_the_ID() == FINANCE_PAGE_ID || is_single()) 
+        {
+           $addClass_breadcrumb = 'has--breadcrumb';
+        }
+    ?>
+    <body class="<?php echo $addClass_breadcrumb.' '.$siteID; ?>">
         <!--[if lte IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
@@ -68,32 +160,77 @@
                     <div class="languageselector js-languageselector">
                         <div class="dropdown">
                             <div class="head">
-                            	<?php 
-									if (!empty($en_label)) 
-									{
-										?>
-			                                <span class="text"><?php echo $en_label ?></span>
-			                                <span class="arrow"></span>
-		                                <?php
-									}
-								?>    
+                            	<?php
+                                    $siteID = get_current_blog_id();
+
+                                    global $post;
+
+                                    $post_slug = $post->post_name;
+
+                                    if($siteID == CONST_AGB_AR_SITE_ID)
+                                    {
+                                        $lang_label_text ="عربي";
+                                        ?>
+                                            <span class="text"><?php echo $ar_label ?></span>
+                                            <span class="arrow"></span>
+                                        <?php
+                                    }
+                                    if($siteID == CONST_AGB_EN_SITE_ID)
+                                    {
+                                        $lang_label_text = 'EN';
+                                        ?>
+                                            <span class="text"><?php echo $en_label ?></span>
+                                            <span class="arrow"></span>
+                                        <?php
+                                    }
+                                ?>   
                             </div>
                             <ul class="dropdownMenu">
-                            	<?php 
-									
-									if (!empty($en_label)) 
-									{
-										?>
-			                                <li class="txt-en"><a href="#"><?php echo $en_label ?></a></li>
-		                                <?php
-		                            }
-									if (!empty($ar_label)) 
-									{
-										?>
-			                                <li class="txt-ar"><a href="#"><?php echo $ar_label ?></a></li>
-		                                <?php
-									}
-								?>    
+                            	<?php
+
+                                        $siteID = get_current_blog_id();
+                                        global $post;
+
+                                        $post_slug = $post->post_name;
+
+
+                                        $addClassEN = 'txt-en';
+                                        $addClassAR = 'txt-ar';
+
+                                        $urlEN = get_site_url(CONST_AGB_EN_SITE_ID);
+                                        $urlAR = get_site_url(CONST_AGB_AR_SITE_ID);
+
+                                        $urlEN .= '/'.$post_slug ;
+                                        $urlAR .= '/'.$post_slug ;
+
+                                        if (is_front_page()) 
+                                        {
+                                            $urlEN = get_site_url(CONST_AGB_EN_SITE_ID);
+                                            $urlAR = get_site_url(CONST_AGB_AR_SITE_ID);
+
+                                        }
+
+                                        // if ('service' == get_post_type())
+                                        // {
+                                        //     $url = get_site_url(CONST_PERTROMIN_EN_SITE_ID);
+                                        // }
+                                    ?> 
+                                <?php
+                                    if (!empty($en_label)) 
+                                    {
+                                        ?>
+                                            <li class="<?php echo $addClassEN?>"><a href="<?php echo $urlEN ?>"><?php echo $en_label ?></a></li>
+                                        <?php
+                                    }
+                                ?>        
+                                <?php
+                                    if (!empty($ar_label)) 
+                                    {
+                                        ?>    
+                                            <li class="<?php echo $addClassAR ?>"><a href="<?php echo $urlAR ?>"><?php echo $ar_label ?></a></li>
+                                        <?php
+                                    }
+                                ?>  
                             </ul>
                         </div>
                     </div>
@@ -122,32 +259,76 @@
                                 <div class="dropdown">
                                     <div class="head">
                                         <?php
-                                            if (!empty($en_label)) 
-                                            {
-                                                ?>
-                                                    <span class="text"><?php echo $en_label ?></span>
-                                                    <span class="arrow"></span>
-                                                <?php
-                                            }
-                                        ?>    
+                                    $siteID = get_current_blog_id();
+
+                                    global $post;
+
+                                    $post_slug = $post->post_name;
+
+                                    if($siteID == CONST_AGB_AR_SITE_ID)
+                                    {
+                                        $lang_label_text ="عربي";
+                                        ?>
+                                            <span class="text"><?php echo $ar_label ?></span>
+                                            <span class="arrow"></span>
+                                        <?php
+                                    }
+                                    if($siteID == CONST_AGB_EN_SITE_ID)
+                                    {
+                                        $lang_label_text = 'EN';
+                                        ?>
+                                            <span class="text"><?php echo $en_label ?></span>
+                                            <span class="arrow"></span>
+                                        <?php
+                                    }
+                                ?>    
                                     </div>
                                     <ul class="dropdownMenu">
+                                         <?php
+
+                                        $siteID = get_current_blog_id();
+                                        global $post;
+
+                                        $post_slug = $post->post_name;
+
+
+                                        $addClassEN = 'txt-en';
+                                        $addClassAR = 'txt-ar';
+
+                                        $urlEN = get_site_url(CONST_AGB_EN_SITE_ID);
+                                        $urlAR = get_site_url(CONST_AGB_AR_SITE_ID);
+
+                                        $urlEN .= '/'.$post_slug ;
+                                        $urlAR .= '/'.$post_slug ;
+
+                                        if (is_front_page()) 
+                                        {
+                                            $urlEN = get_site_url(CONST_AGB_EN_SITE_ID);
+                                            $urlAR = get_site_url(CONST_AGB_AR_SITE_ID);
+
+                                        }
+
+                                        // if ('service' == get_post_type())
+                                        // {
+                                        //     $url = get_site_url(CONST_PERTROMIN_EN_SITE_ID);
+                                        // }
+                                    ?> 
+                                <?php
+                                    if (!empty($en_label)) 
+                                    {
+                                        ?>
+                                            <li class="<?php echo $addClassEN?>"><a href="<?php echo $urlEN ?>"><?php echo $en_label ?></a></li>
                                         <?php
-                                            if (!empty($en_label)) 
-                                            {
-                                                ?>
-                                                    <li class="txt-en"><a href="#"><?php echo $en_label ?></a></li>
-                                                <?php
-                                            }
-                                        ?>        
-                                        <?php
-                                            if (!empty($ar_label)) 
-                                            {
-                                                ?>    
-                                                    <li class="txt-ar"><a href="#"><?php echo $ar_label ?></a></li>
-                                                <?php
-                                            }
+                                    }
+                                ?>        
+                                <?php
+                                    if (!empty($ar_label)) 
+                                    {
                                         ?>    
+                                            <li class="<?php echo $addClassAR ?>"><a href="<?php echo $urlAR ?>"><?php echo $ar_label ?></a></li>
+                                        <?php
+                                    }
+                                ?>     
                                     </ul>
                                 </div>
                             </div>
@@ -180,16 +361,34 @@
                                             $sub_title = $row['sub_title'];
                                             $visit_button_text = $row['visit_button_text'];
                                             $target_id = $row['target_id'];
-                                            $page_url = $row['page_url'];
+                                            $select_page = $row['select_page'];
+                                            // $page_url = $row['page_url'];
+                                            
+                                            $page_url = get_permalink($select_page);
+
                                             $sub_menus = $row['sub_menus'];
+                                            $page_id = $select_page;
                                             
                                             $addClass = '';
+                                            $addClass_active = '';
                                             if ($key1 == 0 ) 
                                             {
                                                $addClass = 'has-no-child';
+                                            } 
+
+                                            $current_page_id = get_the_ID();
+                                            $parent_id = wp_get_post_parent_id(get_the_ID());
+                                            // echo $post->post_parent;
+                                            if(get_page_link() == $page_url || $parent_id == $page_id || $parent_id == $page_id) 
+                                            {
+                                               $addClass_active  = 'active';
+
+                                            }
+                                            else{
+                                                $addClass_active = '@@'.$target_id;
                                             }
                                             ?>
-                                                <li class="@@<?php echo  $target_id; ?>"><a href="<?php echo  $page_url; ?>" class="js-sub-menu-anchor <?php echo  $addClass ?>" data-target="<?php echo  $target_id; ?>"><?php echo  $page_title ?> <span><?php echo  $sub_title ?></span> </a></li>
+                                                <li class="<?php echo  $addClass_active; ?>"><a href="<?php echo  $page_url; ?>" class="js-sub-menu-anchor <?php echo  $addClass ?>" data-target="<?php echo  $target_id; ?>"><?php echo  $page_title ?> <span><?php echo  $sub_title ?></span> </a></li>
 
                                             <?php 
 
@@ -217,6 +416,10 @@
                                 $visit_button_text = $row['visit_button_text'];
                                 $target_id = $row['target_id'];
                                 $page_url = $row['page_url'];
+                                $select_page = $row['select_page'];
+                                // $page_url = $row['page_url'];
+                                $page_url = get_permalink($select_page);
+                                
                                 $sub_menus = $row['sub_menus'];
                                 ?>
 
@@ -238,57 +441,42 @@
                                                             <ul class="mbl-only">
                                                                 <li class="mbl-only"><a href="<?php echo  $page_url; ?>"><?php echo  $page_title; ?><span><?php echo  $visit_button_text; ?></span> <img src="<?php echo get_template_directory_uri(); ?>/assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
                                                             </ul>
-                                                            <?php 
-                                                                foreach ($sub_menus as $key => $row2) 
+                                                            <?php
+                                                                if (!empty($sub_menus)) 
                                                                 {
-                                                                    $menu_column = $row2['menu_column'];
+                                                                    foreach ($sub_menus as $key => $row2) 
+                                                                    {
+                                                                        $menu_column = $row2['menu_column'];
 
-                                                                    ?>
-                                                                        <ul>
-                                                                            <?php 
-                                                                                foreach ($menu_column as $key => $row3) 
-                                                                                {
-                                                                                    $hashtag = '';
-                                                                                    $sub_page_title = $row3['page_title'];
-                                                                                    $sub_page_url = $row3['page_url'];
-                                                                                    
-                                                                                    if (!empty($row3['hashtag'])) 
+                                                                        ?>
+                                                                            <ul>
+                                                                                <?php 
+                                                                                    foreach ($menu_column as $key => $row3) 
                                                                                     {
-                                                                                       $hashtag = $row3['hashtag'];
+                                                                                        $hashtag = '';
+                                                                                        $sub_page_title = $row3['page_title'];
+                                                                                        $sub_page_url = $row3['page_url'];
+                                                                                        $sub_page_id = $row3['page_id'];
+                                                                                        $sub_page_url = get_permalink($sub_page_id);
+                                                                                        
+                                                                                        if (!empty($row3['hashtag'])) 
+                                                                                        {
+                                                                                           $hashtag = $row3['hashtag'];
+                                                                                        }
+
+
+                                                                                        ?>
+                                                                                            <li><a href="<?php echo  $sub_page_url.$hashtag; ?>"><?php echo  $sub_page_title; ?><img src="<?php echo get_template_directory_uri(); ?>/assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
+
+                                                                                        <?php
                                                                                     }
+                                                                                ?>
+                                                                            </ul>
 
-
-                                                                                    ?>
-                                                                                        <li><a href="<?php echo  $sub_page_url.$hashtag; ?>"><?php echo  $sub_page_title; ?><img src="<?php echo get_template_directory_uri(); ?>/assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-
-                                                                                    <?php
-                                                                                }
-                                                                            ?>
-                                                                        </ul>
-
-                                                                    <?php
+                                                                        <?php
+                                                                    }
                                                                 }
                                                             ?>
-                                                               
-                                                              
-                                                            <!-- <ul>
-                                                                <li><a href="../trade-foreign-exchange">Trade & Foreign Exchange<img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                                                <li class="subItems"><a href="../trade-foreign-exchange/index.html#import">Import services<img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                                                <li class="subItems"><a href="../trade-foreign-exchange/index.html#export">Export services<img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                                                <li class="subItems"><a href="../trade-foreign-exchange/index.html#bankers-guarantee">Bankers Guarantee<img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                                                <li class="subItems"><a href="../trade-foreign-exchange/index.html#trade-document">Trade Documents<img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                                            </ul>
-                                                            <ul>
-                                                                <li><a href="../day-to-day">Day to Day <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                                                <li class="subItems"><a href="../day-to-day/index.html#dtd">Accounts<img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                                                <li class="subItems"><a href="../day-to-day/index.html#dtd-payment">Payments<img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                                                <li class="subItems"><a href="../day-to-day/index.html#dtd-collection">Collections<img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                                            </ul>
-                                                            <ul>
-                                                                <li><a href="../finance">Finance <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                                                <li class="subItems"><a href="../finance/index.html#workingcapital">Working capital<img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                                                <li class="subItems"><a href="../finance/index.html#fixedassets">Fixed assets<img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                                            </ul> -->
                                                         </div>
                                                     </div>
                                                 <?php
@@ -302,119 +490,6 @@
                         }
 
                     ?>
-                <!--     <div class="c-megaMenu-wrap js-mega-menu" data-menu-id="about">
-                        <div class="c-megaMenu-dropdown">
-                            <div class="c-megaMenu-left">
-                                <div class="megamenu-content for-desktop">
-                                    <h2 class="h2">About AGB</h2>
-                                    <a href="../about" class="btn btn-link">Visit Section <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a>
-                                </div>
-                            </div>
-                            <a href="#" class="go-back js-goBack"><img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"> Back to Menu</a>
-                        </div>
-                    </div>
-                    <div class="c-megaMenu-wrap js-mega-menu" data-menu-id="corporate-banking">
-                        <div class="c-megaMenu-dropdown">
-                            <div class="c-megaMenu-left">
-                                <div class="megamenu-content for-desktop">
-                                    <h2 class="h2">Corporate Banking</h2>
-                                    <a href="../agb-corporate" class="btn btn-link">Visit Section <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a>
-                                </div>
-                            </div>
-                            <a href="#" class="go-back js-goBack"><img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"> Back to Menu</a>
-                            <div class="c-megaMenu-right js-custom-scroll-bar">
-                                <div class="megamenu-links multi">
-                                    <ul class="mbl-only">
-                                        <li class="mbl-only"><a href="../agb-corporate">Corporate Banking <span>Visit Section</span> <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                    </ul>
-                                    <ul>
-                                        <li><a href="../trade-foreign-exchange">Trade & Foreign Exchange<img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                        <li class="subItems"><a href="../trade-foreign-exchange/index.html#import">Import services<img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                        <li class="subItems"><a href="../trade-foreign-exchange/index.html#export">Export services<img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                        <li class="subItems"><a href="../trade-foreign-exchange/index.html#bankers-guarantee">Bankers Guarantee<img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                        <li class="subItems"><a href="../trade-foreign-exchange/index.html#trade-document">Trade Documents<img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                    </ul>
-                                    <ul>
-                                        <li><a href="../day-to-day">Day to Day <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                        <li class="subItems"><a href="../day-to-day/index.html#dtd">Accounts<img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                        <li class="subItems"><a href="../day-to-day/index.html#dtd-payment">Payments<img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                        <li class="subItems"><a href="../day-to-day/index.html#dtd-collection">Collections<img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                    </ul>
-                                    <ul>
-                                        <li><a href="../finance">Finance <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                        <li class="subItems"><a href="../finance/index.html#workingcapital">Working capital<img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                        <li class="subItems"><a href="../finance/index.html#fixedassets">Fixed assets<img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="c-megaMenu-wrap js-mega-menu" data-menu-id="retail-banking">
-                        <div class="c-megaMenu-dropdown">
-                            <div class="c-megaMenu-left">
-                                <div class="megamenu-content for-desktop">
-                                    <h2 class="h2">Retail Banking </h2>
-                                    <a href="../agb-retail/" class="btn btn-link">Visit Section <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a>
-                                </div>
-                            </div>
-                            <a href="#" class="go-back js-goBack"><img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"> Back to Menu</a>
-                            <div class="c-megaMenu-right">
-                                <div class="megamenu-links">
-                                    <ul>
-                                        <li class="mbl-only"><a href="../agb-retail/">Retail Banking  <span>Visit Section</span> <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                        <li><a href="../agb-retail#currentaccount">Current Account  <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                        <li><a href="../agb-retail#savingaccount">Investment Deposit Account <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                        <li><a href="../agb-retail">Foreign Currency Exchange <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="c-megaMenu-wrap js-mega-menu" data-menu-id="find-us">
-                        <div class="c-megaMenu-dropdown">
-                            <div class="c-megaMenu-left">
-                                <div class="megamenu-content for-desktop">
-                                    <h2 class="h2">Find Us</h2>
-                                    <a href="../get-in-touch" class="btn btn-link">Visit Section <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a>
-                                </div>
-                            </div>
-                            <a href="#" class="go-back js-goBack"><img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"> Back to Menu</a>
-                            <div class="c-megaMenu-right">
-                                <div class="megamenu-links">
-                                    <ul>
-                                        <li class="mbl-only"><a href="../get-in-touch">Find Us <span>Visit Section</span> <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                        <li><a href="../get-in-touch#branches">Branches <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                        <li><a href="../get-in-touch#call">Call Center <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                        <li><a href="../get-in-touch#atmlocation">Atm Location <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="c-megaMenu-wrap js-mega-menu" data-menu-id="terms-conditions">
-                        <div class="c-megaMenu-dropdown">
-                            <div class="c-megaMenu-left">
-                                <div class="megamenu-content for-desktop">
-                                    <h2 class="h2">Legal</h2>
-                                   
-                                    <a href="../legal" class="btn btn-link">Visit Section <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a>
-                                </div>
-                            </div>
-                            <a href="#" class="go-back js-goBack"><img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"> Back to Menu</a>
-                            <div class="c-megaMenu-right">
-                                <div class="megamenu-links">
-                                    <ul>
-                                        <li class="mbl-only"><a href="../legal">Legal <span>Visit to the section</span> <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                        <li><a href="../terms-conditions">Terms & Conditions <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                        <li><a href="../privacy-policy">Privacy Policy <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                        <li><a href="../coockie-declaration">Cookie Declaration <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                        <li><a href="../covid-regulation/">Covid Regulations <img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/ic-arrow-right-red.svg" alt=">" class="js-tosvg tosvg"></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-                        
                 </div>
                 <div class="hamburger-menu js-menu-toggle">
                     <div class="meu-sidebr">
@@ -432,18 +507,91 @@
                     <div class="info-wrapper">
                         <div class="breadcrumb-info">
                             <div class="info-box1">
-                                <a href="../agb-corporate">Corporate Banking</a>
+                                <?php
+                                    $corporate_title = get_the_title(CORPORATE_PAGE_ID);
+                                    // $corporate_title = get_field('heading',CORPORATE_PAGE_ID);
+                                    $corporate_url = get_permalink(CORPORATE_PAGE_ID);
+                                    if (!empty($corporate_title))
+                                    {
+                                        ?>
+                                            <a href="<?php echo $corporate_url ?>"><?php echo $corporate_title ?></a>
+                                        <?php
+                                    }
+                                ?>
                             </div>
                         </div>
                         <div class="breadcrumb-info">
-                            <div class="breadcrumb-links">
-                                <a href="../trade-foreign-exchange">Trade Product and Services</a>
+                            <?php
+                                $active_class_breadcrumb = '';
+                                if (get_the_ID() == TRADE_FOREIGN_EXCHANGE_PAGE_ID || 'foriegn-exchange' == get_post_type())
+                                {
+                                    $active_class_breadcrumb = 'active';
+                                }
+
+                                $foreign_exchange = getPostTypeData('foreign-exchange');
+                                //dd($foreign_exchange);
+                                foreach ($foreign_exchange->posts as $key4 => $row4) 
+                                {
+                                    $post_id = $row4->ID;
+                                    if(get_the_ID() == $post_id) 
+                                    {
+                                       $active_class_breadcrumb  = 'active';
+
+                                    }
+                                }
+                            ?>
+                            <div class="breadcrumb-links <?php echo $active_class_breadcrumb; ?>">
+                                <?php
+                                    // $trade_title = get_the_title(TRADE_FOREIGN_EXCHANGE_PAGE_ID);
+                                    $trade_title = get_field('heading',TRADE_FOREIGN_EXCHANGE_PAGE_ID);
+                                    $trade_url = get_permalink(TRADE_FOREIGN_EXCHANGE_PAGE_ID);
+                                    if (!empty($trade_title))
+                                    {
+                                        ?>
+                                            <a href="<?php echo $trade_url ?>"><?php echo $trade_title ?></a>
+                                        <?php
+                                    }
+                                ?>
                             </div>
-                            <div class="breadcrumb-links">
-                                <a href="../day-to-day/index.html">Day To Day</a>
+                            <?php
+                                $active_class_breadcrumb = '';
+                                if (get_the_ID() == DAY_TO_DAY_PAGE_ID || 'day-to-day' == get_post_type())
+                                {
+                                    $active_class_breadcrumb = 'active';
+                                }
+                            ?>
+                            <div class="breadcrumb-links <?php echo $active_class_breadcrumb; ?>">
+                                <?php
+                                    // $day_to_day_title = get_the_title(DAY_TO_DAY_PAGE_ID);
+                                    $day_to_day_title = get_field('heading',DAY_TO_DAY_PAGE_ID);
+                                    $day_to_day_url = get_permalink(DAY_TO_DAY_PAGE_ID);
+                                    if (!empty($day_to_day_title))
+                                    {
+                                        ?>
+                                            <a href="<?php echo $day_to_day_url ?>"><?php echo $day_to_day_title ?></a>
+                                        <?php
+                                    }
+                                ?>
                             </div>
-                            <div class="breadcrumb-links">
-                                <a href="../finance">Finance</a>
+                            <?php
+                                $active_class_breadcrumb = '';
+                                if (get_the_ID() == FINANCE_PAGE_ID || 'finance' == get_post_type())
+                                {
+                                    $active_class_breadcrumb = 'active';
+                                }
+                            ?>
+                            <div class="breadcrumb-links <?php echo $active_class_breadcrumb; ?>">
+                                <?php
+                                    // $finance_title = get_the_title(FINANCE_PAGE_ID);
+                                    $finance_title = get_field('heading',FINANCE_PAGE_ID);
+                                    $finance_url = get_permalink(FINANCE_PAGE_ID);
+                                    if (!empty($finance_title))
+                                    {
+                                        ?>
+                                            <a href="<?php echo $finance_url ?>"><?php echo $finance_title ?></a>
+                                        <?php
+                                    }
+                                ?>
                             </div>
                         </div>
                     </div>

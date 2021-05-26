@@ -2,9 +2,14 @@
 /*
 Template Name: Home
 */
+    
 get_header();?>
 <?php 
   $banner_image = get_field('banner_image');
+  $banner_image_for_morning = get_field('banner_image_for_morning');
+  $banner_image_for_afternoon = get_field('banner_image_for_afternoon');
+  $banner_image_for_evening = get_field('banner_image_for_evening');
+  $banner_image_for_night = get_field('banner_image_for_night');
   $banner_title = get_field('banner_title');
   $banner_description = get_field('banner_description');
   $types_of_account = get_field('types_of_account');
@@ -21,17 +26,58 @@ get_header();?>
   $find_more_text = get_field('find_more_text',CONST_SITE_INFORMATION_PAGE_ID);
   $button_arrow_icon = get_field('button_arrow_icon',CONST_SITE_INFORMATION_PAGE_ID);
 ?>
+
 <section class="home-banner">
     <div class="b-thumb-wrapper">
         <div class="b-thumb-img">
           <?php
-            if (!empty($banner_image))
+            if (!empty($banner_image_for_morning))
             {
               ?>
+                  <?php
+                    /* This sets the $time variable to the current hour in the 24 hour clock format */
+                    date_default_timezone_set("Africa/Khartoum");
+                    $time = date("H");
+                    /* Set the $timezone variable to become the current timezone */
+                    $timezone = date("e");
+                    /* If the time is less than 1200 hours, show good morning */
+                    if ($time < "12") {
+                        // echo "Good morning";
+                        $goods = "Good morning";
+                        $banner_image = $banner_image_for_morning;
+
+                    } else
+                    /* If the time is grater than or equal to 1200 hours, but less than 1700 hours, so good afternoon */
+                    if ($time >= "12" && $time < "17") {
+                        // echo "Good afternoon";
+                       $goods = "Good afternoon";
+                        $banner_image = $banner_image_for_afternoon;
+                    } else
+                    /* Should the time be between or equal to 1700 and 1900 hours, show good evening */
+                    if ($time >= "17" && $time < "19") {
+                        // echo "Good evening";
+
+                       $goods = "Good evening";
+                        $banner_image = $banner_image_for_evening;
+                    } else
+                    /* Finally, show good night if the time is greater than or equal to 1900 hours */
+                    if ($time >= "19") {
+                        // echo "Good night";
+                       $goods = "Good night";
+                        $banner_image = $banner_image_for_night;
+                    }
+                    else{
+                       $goods = "Good morning";
+                        $banner_image = $banner_image_for_morning;
+                    }
+
+                  ?>
                 <picture>
                   <source media="(max-width: 600px) and (orientation: portrait)" srcset="<?php echo $banner_image; ?>">
                   <!-- Required Dimension: desktop = 1440x810px -->
-                  <img src="<?php echo $banner_image; ?>" alt="banner-02" class="objectfit lozad">
+
+                  
+                  <img src="<?php echo $banner_image; ?>" data-title="<?php echo $goods ?>" alt="banner-02" class="objectfit lozad">
                 </picture>            
               <?php
             }
@@ -87,8 +133,12 @@ get_header();?>
                       }
                       if (!empty($account_url))
                       {
+                        if (!empty($value['account_hashtag'])) 
+                        {
+                           $account_hashtag = $value['account_hashtag'];
+                        }
                         ?>
-                          <a href="<?php echo get_site_url().$account_url;?>"><?php echo $learn_more_text; ?></a>
+                          <!-- <a href="<?php echo $account_url.$account_hashtag;?>"><?php echo $learn_more_text; ?></a> -->
                         <?php
                       }
                     ?>
@@ -118,7 +168,7 @@ get_header();?>
               if (!empty($our_branches_url))
               {
                 ?>  
-                  <a href="<?php echo get_site_url().$our_branches_url;?>"><?php echo $learn_more_text; ?></a>
+                  <!-- <a href="<?php echo get_site_url().$our_branches_url;?>"><?php echo $learn_more_text; ?></a> -->
                 <?php
               }
             ?>
@@ -256,12 +306,12 @@ get_header();?>
                                             }
                                             if (!empty($service_url))
                                             {
-                                              if (!empty($value2['hashtag'])) 
+                                              if (!empty($value2['service_hashtag'])) 
                                               {
-                                                 $hashtag = $value2['hashtag'];
+                                                 $service_hashtag = $value2['service_hashtag'];
                                               }
                                               ?>
-                                                <a href="<?php echo  $service_url.$hashtag; ?>" class="btn btn-link"><img src="<?php echo get_template_directory_uri(); ?>/assets/img/icons/btn-arrow.svg" alt=">" class="js-tosvg tosvg"><?php echo $learn_more_text; ?></a>
+                                                <a href="<?php echo  $service_url.$service_hashtag; ?>" class="btn btn-link"><img src="<?php echo get_template_directory_uri(); ?>/assets/img/icons/btn-arrow.svg" alt=">" class="js-tosvg tosvg"><?php echo $learn_more_text; ?></a>
                                               <?php
                                             }
                                           ?>
@@ -314,8 +364,14 @@ get_header();?>
                         ?>
                       </h5>
                     </div>
-                
-                    <div id="collapse<?php echo $key3;?>" class="collapse show" aria-labelledby="heading<?php echo $key3;?>" data-parent="#accordion">
+                    <?php 
+                      $show_class = '';
+                      if ($key3 == 0)
+                      {
+                        $show_class = 'show';
+                      }
+                    ?>
+                    <div id="collapse<?php echo $key3;?>" class="collapse <?php echo $show_class; ?>" aria-labelledby="heading<?php echo $key3;?>" data-parent="#accordion">
                       <div class="card-body">
                           <div class="post-box">
                               <div class="sec-content">

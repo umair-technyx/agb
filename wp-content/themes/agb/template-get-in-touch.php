@@ -20,20 +20,11 @@ get_header();?>
   	$branches = get_field('branches');
 	  	
   	$call_center_contact_numbers = get_field('call_center_contact_numbers');
-  		// call_center_contact_number
 	$call_center_working_time = get_field('call_center_working_time');
-		// call_center_working_hours
-		// call_center_working_days
 	$atm_location_contact_numbers = get_field('atm_location_contact_numbers');
-		// atm_location_contact_number
 	$atm_location_working_time = get_field('atm_location_working_time');
-		// atm_location_working_hours
-		// atm_location_working_days
 	$ask_questions_contact_numbers = get_field('ask_questions_contact_numbers');
-		// ask_questions_contact_number
 	$ask_questions_working_time = get_field('ask_questions_working_time');
-		// ask_questions_working_hours
-		// ask_questions_working_days
 
 ?>
 <section class="sec-padded--head">
@@ -76,8 +67,15 @@ get_header();?>
 			                    	foreach ($select_your_location as $key1 => $value1)
 					              	{
 				              			$location = $value1['location'];
+				              			$locationCounts = count($select_your_location);
+				              			$selected = '';
+
+				              			if ($locationCounts <= 1) {
+				              				$selected = 'selected';
+				              				# code...
+				              			}
 			                    		?>
-			                    			<option><?php echo $location; ?></option>
+			                    			<option <?php echo $selected ?>><?php echo $location; ?></option>
 		                    			<?php
 	                    			}
 	                			?>
@@ -103,21 +101,23 @@ get_header();?>
 			            </li>
 		            <?php
 	            }
-	            if (!empty($call_center_heading))
-	            {
-          			?>
-			            <li class="nav-item">
-			                <a class="nav-link" id="call-tab" data-toggle="pill" href="#call" role="tab" aria-controls="call"
-			                    aria-selected="false"><?php echo $call_center_heading; ?></a>
-			            </li>
-		            <?php
-	            }
+	           
 	            if (!empty($atm_location_heading))
 	            {
           			?>
 			            <li class="nav-item">
 			                <a class="nav-link" id="atmlocation-tab" data-toggle="pill" href="#atmlocation" role="tab"
 			                    aria-controls="atmlocation" aria-selected="false"><?php echo $atm_location_heading; ?></a>
+			            </li>
+		            <?php
+	            }
+	            
+	            if (!empty($call_center_heading))
+	            {
+          			?>
+			            <li class="nav-item">
+			                <a class="nav-link" id="call-tab" data-toggle="pill" href="#call" role="tab" aria-controls="call"
+			                    aria-selected="false"><?php echo $call_center_heading; ?></a>
 			            </li>
 		            <?php
 	            }
@@ -159,7 +159,10 @@ get_header();?>
 							  	$branch_contact_numbers = $value2['branch_contact_numbers'];
 							  	$branch_working_hours = $value2['branch_working_hours'];
 							  	$branch_working_days = $value2['branch_working_days'];
-							  	$branch_google_map = $value2['branch_google_map'];
+							  	$latitude = $value2['latitude'];
+							  	$longitude = $value2['longitude'];
+							  	$google_map_iframe = $value2['google_map_iframe'];
+							  	// $branch_google_map = $value2['branch_google_map'];
 				              	$add_class='';
 				              	if($key2 %2 != 0)  
 								{
@@ -260,16 +263,40 @@ get_header();?>
 				                                            </div>
 				                                        </div>
 				                                    </div>
-				                                    <div class="location-map">
+				                                    <!-- <div class="location-map">
 				                                        <div class="map-style">
 				                                        	<?php
-													            if (!empty($branch_google_map))
-													            {
-													              	?>
-				                                            			<div id="map"><?php echo $branch_google_map ?></div>
-			                                            			<?php
-		                                            			}
-	                                            			?>
+				                                        		$map_id = '';
+				                                        		if ($key2 == 0)
+				                                        		{
+				                                        			$map_id = 'map';
+				                                        		}
+				                                        		if ($key2 == 1)
+				                                        		{
+				                                        			$map_id = 'map2';
+				                                        		}
+				                                        		if ($key2 == 2)
+				                                        		{
+				                                        			$map_id = 'map3';
+				                                        		}
+				                                        	?>
+				                                        	<div id="<?php echo $map_id; ?>"></div>
+				                                        </div>
+				                                    </div> -->
+				                                    <div class="location-map">
+				                                        <div class="map-style">
+				                                        	<?php 
+				                                        		if (!empty($google_map_iframe)) 
+				                                        		{
+				                                        			echo $google_map_iframe;
+				                                        		}
+				                                        		else
+				                                        		{
+				                                        			?>
+				                                        				<!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d123029.7218617269!2d32.50255668820002!3d15.501699496212284!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x168e8fde9837cabf%3A0x191f55de7e67db40!2sKhartoum%2C%20Sudan!5e0!3m2!1sen!2s!4v1618573708293!5m2!1sen!2s" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe> -->
+				                                        			<?php
+				                                        		}
+				                                        	?>
 				                                        </div>
 				                                    </div>
 				                                </div>
@@ -282,46 +309,8 @@ get_header();?>
                     ?>
                 </section>
             </div>
-            <div class="card-header mobile-view" id="headingOne">
-                <h5 class="mb-0">
-                	<?php
-			            if (!empty($call_center_heading))
-			            {
-			              	?>
-                    			<button class="service-title collapsed" data-toggle="collapse" data-target="#call" aria-expanded="true" aria-controls="collapseOne"><?php echo $call_center_heading; ?></button>
-                			<?php
-			            }
-		            ?>
-                </h5>
-            </div>
-            <div class="tab-pane fade" id="call" data-parent="#accordion" role="tabpanel" aria-labelledby="call-tab">
-                <section class="location-info">
-                    <div class="sec-padded">
-                        <div class="sec-find-us">
-                            <div class="container container-expanded">
-                                <div class="find-us-wrapper">
-                                    <div class="branch-content">
-                                        <div class="services-info">
-                                            <div class="contact-info">
-                                                <div class="contact">
-                                                    <span>Contact Number</span>
-                                                    <p>T: +990 222 4445</p>
-                                                </div>
-                                                <div class="hours">
-                                                    <span>Working Hours</span>
-                                                    <p class="mt-15">08:00 AM - 03:00 PM </p>
-                                                    <p>Monday to Friday</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-            <div class="card-header mobile-view" id="headingOne">
+
+           	  <div class="card-header mobile-view" id="headingOne">
                 <h5 class="mb-0">
                 	<?php
 			            if (!empty($atm_location_heading))
@@ -344,13 +333,46 @@ get_header();?>
                                         <div class="services-info">
                                             <div class="contact-info">
                                                 <div class="contact">
-                                                    <span>Contact Number</span>
-                                                    <p>T: +990 222 4445</p>
+                                                	<?php
+											            if (!empty($contact_number_title))
+											            {
+											              	?>
+			                                                    <span><?php echo $contact_number_title; ?></span>
+		                                                    <?php
+														}
+														if (!empty($atm_location_contact_numbers))
+											            {
+															foreach ($atm_location_contact_numbers as $key6 => $value6)
+															{
+																$atm_location_contact_number = $value6['atm_location_contact_number'];
+																?>
+				                                                    <p><?php echo $atm_location_contact_number; ?></p>
+			                                                    <?php
+															}
+														}
+													?>      
                                                 </div>
                                                 <div class="hours">
-                                                    <span>Working Hours</span>
-                                                    <p class="mt-15">08:00 AM - 03:00 PM </p>
-                                                    <p>Monday to Friday</p>
+                                                	<?php
+											            if (!empty($working_hours_title))
+											            {
+											              	?>
+                                                    			<span><?php echo $working_hours_title; ?></span>
+                                                			<?php
+														}
+														if (!empty($atm_location_working_time))
+											            {
+															foreach ($atm_location_working_time as $key7 => $value7)
+															{
+																$atm_location_working_hours = $value7['atm_location_working_hours'];
+																$atm_location_working_days = $value7['atm_location_working_days'];
+																?>
+				                                                    <p class="mt-15"><?php echo $atm_location_working_hours; ?></p>
+				                                                    <p><?php echo $atm_location_working_days; ?></p>
+			                                                    <?php
+															}
+														}
+													?>     
                                                 </div>
                                             </div>
                                         </div>
@@ -361,6 +383,82 @@ get_header();?>
                     </div>
                 </section>
             </div>
+
+            <div class="card-header mobile-view" id="headingOne">
+                <h5 class="mb-0">
+                	<?php
+			            if (!empty($call_center_heading))
+			            {
+			              	?>
+                    			<button class="service-title collapsed" data-toggle="collapse" data-target="#call" aria-expanded="true" aria-controls="collapseOne"><?php echo $call_center_heading; ?></button>
+                			<?php
+			            }
+		            ?>
+                </h5>
+            </div>
+            <div class="tab-pane fade" id="call" data-parent="#accordion" role="tabpanel" aria-labelledby="call-tab">
+                <section class="location-info">
+                    <div class="sec-padded">
+                        <div class="sec-find-us">
+                            <div class="container container-expanded">
+                                <div class="find-us-wrapper">
+                                    <div class="branch-content">
+                                        <div class="services-info">
+                                            <div class="contact-info">
+                                                <div class="contact">
+                                                	<?php
+											            if (!empty($contact_number_title))
+											            {
+											              	?>
+			                                                    <span><?php echo $contact_number_title; ?></span>
+		                                                    <?php
+														}
+														if (!empty($call_center_contact_numbers))
+											            {
+															foreach ($call_center_contact_numbers as $key4 => $value4)
+															{
+																$call_center_contact_number = $value4['call_center_contact_number'];
+																?>
+																	<p><?php echo $call_center_contact_number; ?></p>
+																<?php
+															}
+														}
+													?>        
+                                                </div>
+                                                <div class="hours">
+                                                	<?php
+											            if (!empty($working_hours_title))
+											            {
+											              	?>
+                                                    			<span><?php echo $working_hours_title; ?></span>
+                                                			<?php
+														}
+														if (!empty($call_center_working_time))
+											            {
+															foreach ($call_center_working_time as $key5 => $value5)
+															{
+																$call_center_working_hours = $value5['call_center_working_hours'];
+																$call_center_working_days = $value5['call_center_working_days'];
+																?>
+				                                                    <p class="mt-15"><?php echo $call_center_working_hours; ?></p>
+				                                                    <p><?php echo $call_center_working_days; ?></p>
+			                                                    <?php
+															}
+														}
+													?>      
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+          
+
             <div class="card-header mobile-view" id="headingOne">
                 <h5 class="mb-0">
                 	<?php
@@ -384,13 +482,46 @@ get_header();?>
                                         <div class="services-info">
                                             <div class="contact-info">
                                                 <div class="contact">
-                                                    <span>Contact Number</span>
-                                                    <p>T: +990 222 4445</p>
+                                                	<?php
+											            if (!empty($contact_number_title))
+											            {
+											              	?>
+                                                    			<span><?php echo $contact_number_title; ?></span>
+                                                			<?php
+														}
+														if (!empty($ask_questions_contact_numbers))
+											            {
+															foreach ($ask_questions_contact_numbers as $key8 => $value8)
+															{
+																$ask_questions_contact_number = $value8['ask_questions_contact_number'];
+																?>
+	                                                    			<p><?php echo $ask_questions_contact_number; ?></p>
+	                                                			<?php
+															}
+														}
+													?>      
                                                 </div>
                                                 <div class="hours">
-                                                    <span>Working Hours</span>
-                                                    <p class="mt-15">08:00 AM - 03:00 PM </p>
-                                                    <p>Monday to Friday</p>
+                                                	<?php
+											            if (!empty($working_hours_title))
+											            {
+											              	?>
+                                                    			<span><?php echo $working_hours_title; ?></span>
+                                                			<?php
+														}
+														if (!empty($ask_questions_working_time))
+											            {
+															foreach ($ask_questions_working_time as $key9 => $value9)
+															{
+																$ask_questions_working_hours = $value9['ask_questions_working_hours'];
+																$ask_questions_working_days = $value9['ask_questions_working_days'];
+																?>
+				                                                    <p class="mt-15"><?php echo $ask_questions_working_hours; ?></p>
+				                                                    <p><?php echo $ask_questions_working_days; ?></p>
+			                                                    <?php
+															}
+														}
+													?>      
                                                 </div>
                                             </div>
                                         </div>
@@ -403,9 +534,18 @@ get_header();?>
             </div>
         </div>
     </div>
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSR0j9auYiNLYsHGoXotRU5ZKQPbVmWnI&callback=initMap"
-        type="text/javascript"></script>
+
+
+	<?php
+	$branch_google_map = get_field('google_map_api_key',CONST_SITE_INFORMATION_PAGE_ID);  
+	    $google_map_api_key = 'AIzaSyDSR0j9auYiNLYsHGoXotRU5ZKQPbVmWnI';
+	    if($branch_google_map)
+	    {
+	      $google_map_api_key = $branch_google_map;
+	    }
+	?>
+     <script async defer src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google_map_api_key ?>&callback=initMap" type="text/javascript">
+     </script>
 </section>
 
 <?php get_footer(); ?>

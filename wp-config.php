@@ -80,6 +80,23 @@ $table_prefix = 'wp_';
 define( 'WP_DEBUG', false );
 define( 'ALLOW_UNFILTERED_UPLOADS', true );
 
+define('WP_ALLOW_MULTISITE', true);
+
+define('MULTISITE', true);
+define('SUBDOMAIN_INSTALL', false);
+define('DOMAIN_CURRENT_SITE', 'localhost');
+define('PATH_CURRENT_SITE', '/agb/');
+define('SITE_ID_CURRENT_SITE', 1);
+define('BLOG_ID_CURRENT_SITE', 1);
+ 
+// define('MULTISITE', true);
+// define('SUBDOMAIN_INSTALL', false);
+// define('DOMAIN_CURRENT_SITE', 'localhost');
+// define('PATH_CURRENT_SITE', '/agb/');
+// define('SITE_ID_CURRENT_SITE', 1);
+// define('BLOG_ID_CURRENT_SITE', 1);
+
+
 /* That's all, stop editing! Happy publishing. */
 
 /** Absolute path to the WordPress directory. */

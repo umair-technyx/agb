@@ -156,9 +156,9 @@ $constant_id = FINANCE_PAGE_ID;
 							                        <li>
 							                            <a class="active" href="#trade-document"><?php echo $intro_title; ?></a>
 							                        </li>
-							                        <li>
+							                      <!--   <li>
 							                            <a class="" href="#faqs-trade"><?php echo $faq_title; ?></a>
-							                        </li>
+							                        </li> -->
 							                        <li>
 							                            <a class="" href="#getintouch2"><?php echo $get_in_touch_title; ?></a>
 							                        </li>
@@ -172,7 +172,7 @@ $constant_id = FINANCE_PAGE_ID;
 							                        <h3><?php echo $intro_title; ?></h3>
 							                        <?php echo $intro_description; ?>
 							                    </div>
-							                    <div class="bar-detail" data-link="faqs-trade">
+							                  <!--   <div class="bar-detail" data-link="faqs-trade">
 							                        <h3>FAQs</h3>
 							                        <div class="detail-box">
 							                            <div id="accordion1">
@@ -208,7 +208,7 @@ $constant_id = FINANCE_PAGE_ID;
 							                                
 							                        	</div>
 							                        </div>
-							                    </div>
+							                    </div> -->
 							                    <div class="bar-detail" data-link="getintouch2">
 							                        <h3><?php echo $get_in_touch_title; ?></h3>
 							                        <div class="get-in-touch-detail">

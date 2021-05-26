@@ -79,8 +79,11 @@ get_header();?>
 	      			foreach ($services as $key => $row) 
 		      		{
 		      			$service_title = $row['service_title'];
-		      			$service_id = generate_id_by_title($service_title);
-
+		      			$service_title = $row['service_title'];
+		      			$service_select = $row['service_select'];
+		      			// $service_id = generate_id_by_title($service_title);
+		      			// $service_id = generate_id_by_title(get_the_title($service_select));
+						$service_id = $row['target_id'];
 		      			
 		      			$activeClass = '';
 	                    if ($key == 0 ) 
@@ -110,8 +113,10 @@ get_header();?>
 	      		{
 	      			$service_title = $row['service_title'];
 	      			$service_description = $row['service_description'];
+	      			
 	      			$select_layout = $row['select_layout'];
-	      			$services_listing = $row['services_listing'];
+	      			// $services_listing = $row['services_listing'];
+	      			$service_select = $row['service_select'];
 	      			$intro_title = $row['intro_title'];
 	      			$intro_description = $row['intro_description'];
 	      			$faq_title = $row['faq_title'];
@@ -120,7 +125,8 @@ get_header();?>
 	      			$get_in_touch_description = $row['get_in_touch_description'];
 	      			$get_in_touch_button_text = $row['get_in_touch_button_text'];
 	      			$get_in_touch_url = $row['get_in_touch_url'];
-	      			$service_id = generate_id_by_title($service_title);
+	      			// $service_id = generate_id_by_title(get_the_title($service_select));
+	      			$service_id = $row['target_id'];
 	      			
 	      			
 	      			if (empty($row['get_in_touch_url'])) 
@@ -157,17 +163,28 @@ get_header();?>
 				                    <div class="post-services">
 
 				                    	<?php
-								      		if (!empty($services_listing)) 
+								      		if (!empty($service_select)) 
 								      		{
-								      			foreach ($services_listing as $key1 => $row1) 
-									      		{
-		      										$service_select = $row1['service_select'];
-		      										$post_id = $service_select;
-		      										$post_title = get_the_title($post_id);
-		      										$post_title = get_field('service_title',$post_id);
-		      										$short_description = get_field('short_description',$post_id);
-		      										$featured_image = get_field('featured_image',$post_id);
-		      										$post_url = get_permalink($post_id);
+		      										// $service_select = $row1['service_select'];
+	      										$post_id = $service_select;
+	      										$inner_services = get_field('services',$post_id);
+	      										// $post_title = get_the_title($post_id);
+	      										// $post_title = get_field('service_title',$post_id);
+	      										// $short_description = get_field('short_description',$post_id);
+	      										// $featured_image = get_field('featured_image',$post_id);
+	      										// $post_url = get_permalink($post_id);
+	      										foreach ($inner_services as $key2 => $row2) 
+	      										{
+	      											$post_title = $row2['front_post_title'];
+	      											$short_description = $row2['front_short_description'];
+	      											$featured_image = $row2['front_featured_image'];
+	      											$intro_title = $row2['intro_title'];
+	      											$target_id = $row2['target_id'];
+	      											// $target_id = generate_id_by_title($intro_title);
+
+	      											$post_url = get_permalink($post_id).'#'.$target_id;
+
+	      											$see_more_button_text = get_field('learn_more_text',CONST_SITE_INFORMATION_PAGE_ID);
 									      			?>
 							                        <div class="post-detail">
 							                            <div class="post-image">
@@ -176,7 +193,7 @@ get_header();?>
 							                            <div class="post-description">
 							                                <h3><?php echo $post_title; ?></h3>
 							                                <p><?php echo $short_description; ?></p>
-							                                <a href="<? echo $post_url;?>" class="btn btn-link"><img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/btn-arrow.svg" alt=">" class="js-tosvg tosvg">Learn More</a>
+							                                <a href="<?php echo $post_url;?>" class="btn btn-link"><img src="https://theprojectdemoserver.com/agb-html/v1//assets/img/icons/btn-arrow.svg" alt=">" class="js-tosvg tosvg"><?php echo $see_more_button_text; ?></a>
 							                            </div>
 							                        </div>
 							                        <?php
@@ -201,13 +218,13 @@ get_header();?>
 									                <div class="c-categoryBox">
 									                    <ul class="js-scroll-anchor">
 									                        <li>
-									                            <a class="" href="#trade-document"><?php echo $intro_title; ?></a>
+									                            <a class="" href="#trade-document<?php echo $key; ?>"><?php echo $intro_title; ?></a>
 									                        </li>
+									                       <!--  <li>
+									                            <a class="" href="#faqs-trade<?php echo $key; ?>"><?php echo $faq_title; ?></a>
+									                        </li> -->
 									                        <li>
-									                            <a class="" href="#faqs-trade"><?php echo $faq_title; ?></a>
-									                        </li>
-									                        <li>
-									                            <a class="" href="#getintouch2"><?php echo $get_in_touch_title; ?></a>
+									                            <a class="" href="#getintouch<?php echo $key; ?>"><?php echo $get_in_touch_title; ?></a>
 									                        </li>
 									                    </ul>
 									                </div>
@@ -215,11 +232,11 @@ get_header();?>
 									        </div>
 									        <div class="col-lg-7 col-md-12">
 									                <div class="faq-content js-scroll-sec">
-									                    <div class="bar-detail" data-link="trade-document">
+									                    <div class="bar-detail" data-link="trade-document<?php echo $key; ?>">
 									                        <h3><?php echo $intro_title; ?></h3>
 									                        <?php echo $intro_description; ?>
 									                    </div>
-									                    <div class="bar-detail" data-link="faqs-trade">
+									                    <!-- <div class="bar-detail" data-link="faqs-trade<?php echo $key; ?>">
 									                        <h3>FAQs</h3>
 									                        <div class="detail-box">
 									                            <div id="accordion1">
@@ -231,18 +248,17 @@ get_header();?>
 																      		{
 									      										$f_title = $row2['title'];
 									      										$f_description = $row2['description'];
-									      										$key2++;
 																      			?>
 															                        <div class="card">
 													                                  <div class="card-header" id="heading_<?php echo $key2 ?>">
 													                                    <h5 class="mb-0">
-													                                      <button class="btn btn-link collapsed" data-toggle="collapse" data-parent="#accordion1" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+													                                      <button class="btn btn-link collapsed" data-toggle="collapse" data-parent="#accordion1" data-target="#collapse<?php echo $key.'_'.$key2 ?>" aria-expanded="true" aria-controls="collapse<?php echo $key.'_'.$key2 ?>">
 													                                      	<?php echo $f_title; ?>
 													                                      </button>
 													                                    </h5>
 													                                  </div>
 													                              
-													                                  <div id="collapseOne" class="collapse" aria-labelledby="heading_<?php echo $key2 ?>">
+													                                  <div id="collapse<?php echo $key.'_'.$key2 ?>" class="collapse" aria-labelledby="heading_<?php echo $key2 ?>">
 													                                    <div class="card-body">
 													                                      	<?php echo $f_description; ?>
 													                                    </div>
@@ -255,8 +271,8 @@ get_header();?>
 									                                
 									                        	</div>
 									                        </div>
-									                    </div>
-									                    <div class="bar-detail" data-link="getintouch2">
+									                    </div> -->
+									                    <div class="bar-detail" data-link="getintouch<?php echo $key; ?>">
 									                        <h3><?php echo $get_in_touch_title; ?></h3>
 									                        <div class="get-in-touch-detail">
 									                            <p><?php echo $get_in_touch_description; ?></p>

@@ -16360,6 +16360,14 @@ body.has--breadcrumb .header-breadcrumb {
           -webkit-flex-direction: column;
               -ms-flex-direction: column;
                   flex-direction: column; } }
+      .sec-signup .signup-box .subscribebox .error {
+        display: none; }
+        .sec-signup .signup-box .subscribebox .error p {
+          color: #E30613; }
+      .sec-signup .signup-box .subscribebox .success {
+        display: none; }
+        .sec-signup .signup-box .subscribebox .success p {
+          color: #292D83; }
 
 .footer {
   position: relative; }

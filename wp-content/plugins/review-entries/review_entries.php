@@ -3,7 +3,7 @@
  * @package Subscribers_Log
  */
 /*
-Plugin Name: Subscribers Log
+Plugin Name: Subscribers Listing
 Plugin URI: http://technyxsystems.com/demo/move_me
 Description: This plugin use for manage all Subscribers Log.
 */
@@ -42,7 +42,7 @@ class mv_review_entry_List extends WP_List_Table {
 	 *
 	 * @return mixed
 	 */
-	public static function get_mv_review_entry( $per_page = 5, $page_number = 1 ) {
+	public static function get_mv_review_entry( $per_page = 10, $page_number = 1 ) {
 
 		global $wpdb;
 		$sql = "SELECT * FROM subscribers_log ORDER BY id DESC";
@@ -67,6 +67,7 @@ class mv_review_entry_List extends WP_List_Table {
 
 			$tempData['id'] 		= $row['id'];
 			$tempData['email'] 		= $row['email'];
+			$tempData['language'] 		= $row['language'];
 			$date 				 	= $row['created'];
 			$tempData['created']	= date("F jS, Y", strtotime($date));
 			/*$tempData['contact'] 	= $row['contact'];
@@ -136,6 +137,7 @@ class mv_review_entry_List extends WP_List_Table {
 		switch ( $column_name ) {
 			case 'id':
 			case 'email':
+			case 'language':
 			case 'created':
 			/*case 'contact':
 			case 'message':*/
@@ -192,6 +194,7 @@ class mv_review_entry_List extends WP_List_Table {
 		$columns = [
 			'id'    => __( 'ID', 'sp' ),
 			'email'    => __( 'Email', 'sp' ),
+			'language'    => __( 'Language', 'sp' ),
 			'created'    => __( 'Created', 'sp' )
 			/*'package_title'    => __( 'package_title', 'sp' ),*/
 			/*'programs' => __( 'Programs', 'sp' ),*/
@@ -241,7 +244,7 @@ class mv_review_entry_List extends WP_List_Table {
 		/** Process bulk action */
 		//$this->process_bulk_action();
 		global $wpdb;
-		$per_page     = $this->get_items_per_page( 'subscribers_log', 5);
+		$per_page     = $this->get_items_per_page( 'subscribers_log', 10);
 		$current_page = $this->get_pagenum();
 		$query = "SELECT COUNT(*) FROM subscribers_log  ";
 		$total_items  = $wpdb->get_var( $query );
@@ -323,8 +326,8 @@ class SP_Plugin {
 	public function plugin_menu() {
 
 		$hook = add_menu_page(
-			'Subscribers Log',
-			'Subscribers Log',
+			'Subscribers Listing',
+			'Subscribers Listing',
 			'manage_options',
 			'wp_list_table_class_subscribers_log',
 			[ $this, 'plugin_settings_page' ]
@@ -341,7 +344,7 @@ class SP_Plugin {
 	public function plugin_settings_page() {
 		?>
 		<div class="wrap">
-			<h2>Subscribers Log</h2>
+			<h2>Subscribers Listing</h2>
 			<!-- <p style="text-align: right;"> -->
 			<?php 
 				//$c = plugin_dir_url( __FILE__ ).'custom-export.php';

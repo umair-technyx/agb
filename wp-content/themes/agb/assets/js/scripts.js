@@ -30,21 +30,10 @@ $(window).on('load', function () {
   dataTrim();
   initSelect2('.js-select');
   fixedToScroll();
-  initMobSlider();
+  initMobSlider(); // validation('.js-form-validation');
+
   customScrollBar();
-
-  if ($('#map').length > 0) {
-    initMap();
-  }
-
-  if ($('#map2').length > 0) {
-    initMap2();
-  }
-
-  if ($('#map3').length > 0) {
-    initMap3();
-  }
-
+  initMap('.map');
   tabsFix();
 });
 $(window).on('resize orientationchange', function () {
@@ -311,8 +300,11 @@ function initSelect2(target, search) {
       dir: isRTL
     });
   });
-} // mobile slider
+}
 
+window.addEventListener('hashchange', function () {
+  window.location.reload();
+}, false); // mobile slider
 
 function initMobSlider() {
   if (winWidth < 992) {
@@ -400,49 +392,22 @@ function customScrollBar() {
 ;
 var map;
 
-function initMap() {
-  var location = {
-    lat: 15.587988,
-    lng: 32.537749
-  };
-  map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 10,
-    center: location,
-    disableDefaultUI: true,
-    fullscreenControl: true,
-    zoomControl: true
-  });
-}
-
-;
-
-function initMap2() {
-  var location = {
-    lat: 15.5879884,
-    lng: 32.5377491
-  };
-  map = new google.maps.Map(document.getElementById('map2'), {
-    zoom: 10,
-    center: location,
-    disableDefaultUI: true,
-    fullscreenControl: true,
-    zoomControl: true
-  });
-}
-
-;
-
-function initMap3() {
-  var location = {
-    lat: 15.587988,
-    lng: 32.537749
-  };
-  map = new google.maps.Map(document.getElementById('map3'), {
-    zoom: 10,
-    center: location,
-    disableDefaultUI: true,
-    fullscreenControl: true,
-    zoomControl: true
+function initMap(target) {
+  var $target = $(target);
+  $target.each(function (i, e) {
+    var $self = $(e);
+    var latitude = $self.data('latitude');
+    var longitude = $self.data('longitude');
+    map = new google.maps.Map(e, {
+      zoom: 10,
+      center: {
+        lat: latitude,
+        lng: longitude
+      },
+      disableDefaultUI: true,
+      fullscreenControl: true,
+      zoomControl: true
+    });
   });
 }
 

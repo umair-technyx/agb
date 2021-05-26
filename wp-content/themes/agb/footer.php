@@ -16,6 +16,10 @@
     $terms_and_conditions_text = get_field('terms_and_conditions_text',CONST_SITE_INFORMATION_PAGE_ID);
     $cookie_policy_text = get_field('cookie_policy_text',CONST_SITE_INFORMATION_PAGE_ID);
     $privacy_notice_text = get_field('privacy_notice_text',CONST_SITE_INFORMATION_PAGE_ID);
+
+
+    $required_error_message = get_field('error_message',CONST_SITE_INFORMATION_PAGE_ID);
+    $valid_email_error_message = get_field('valid_email_error_message',CONST_SITE_INFORMATION_PAGE_ID);
 ?>
 <section class="sec-padded--top c-main-footer">
     <div class="sec-signup">
@@ -38,18 +42,44 @@
                     ?>    
                 </div>
                 <div class="subscribebox">
-                    <form>
+                    <form onsubmit="return false;">
                         <?php 
                             if (!empty($enter_email_placeholder)) 
                             {
+
+                                $currentPageID = get_the_ID();
+                                $siteID = get_current_blog_id();
+
+                                $lang = '';
+                                if($siteID == CONST_AGB_AR_SITE_ID)
+                                {
+                                    $lang = 'Arabic';
+                                }
+
+                                if($siteID == CONST_AGB_EN_SITE_ID)
+
+                                {
+                                    $lang = 'English';
+                                }
+
                                 ?>
-                                    <input type="email" class="subscrib" id="user-email" name="user-email" placeholder="<?php echo $enter_email_placeholder ?>" required>
+                                    <div class="form-group">
+                                        <input type="email" class="subscrib" id="user-email" name="user-email" placeholder="<?php echo $enter_email_placeholder ?>">
+                                        <input type="hidden"id="lang" value="<?php echo $lang?>">
+                                        <div class="required-msg">
+                                            <p class="error-email"></p>
+                                        </div>
+                                    </div>
                                 <?php
                             }
                             if (!empty($signup_button_text)) 
                             {
                                 ?>
                                     <button type="submit" class="submit-btn"><?php echo $signup_button_text ?></button>
+                                    <div class="error error-response">
+                                    </div>
+                                    <div class="success">
+                                    </div>
                                 <?php
                             }
                         ?>    
@@ -62,9 +92,9 @@
         <div class="sec-footer">
             <div class="container container-expanded">
                 <div class="row">
-                    <div class="col-xl-8 col-lg-8">
+                   <div class="col-xl-8 col-lg-8">
                         <div class="row">
-                            <div class="col-lg-3 col-6">
+                            <!-- <div class="col-lg-3 col-6">
                                 <div class="quicklinks">
                                     <ul>
                                         <?php 
@@ -122,8 +152,50 @@
                                     </ul>
                                 </div>
                             </div>
+
+                           -->   <?php
+                                $footer_menu = get_field('footer_menu',CONST_SITE_INFORMATION_PAGE_ID);
+                                foreach ($footer_menu as $key => $row) 
+                                {
+                                    $menu_heading = $row['menu_heading'];
+                                    $menu = $row['menu'];
+                                    ?>
+
+                                        <div class="col-lg-3 col-6">
+                                            <div class="quicklinks">
+                                                <ul>
+                                                    <?php 
+                                                        if (!empty($menu_heading)) 
+                                                        {
+                                                            ?>
+                                                                <li class="head"><?php echo $menu_heading ?></li>
+                                                            <?php
+                                                        }
+                                                        if (!empty($menu)) 
+                                                        {
+                                                            foreach ($menu as $key => $row1) {
+                                                                $footer_menu_title = $row1['footer_menu_title'];
+                                                                $footer_menu_url = $row1['footer_menu_url'];
+
+                                                                # code...
+                                                            ?>
+                                                                <li><a href="<?php echo $footer_menu_url ?>"><?php echo $footer_menu_title ?></a></li>
+                                                            <?php
+                                                            }
+                                                        }
+                                                        
+                                                    ?>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+
+                                    <?php
+                                }
+
+                            ?>
                         </div>
-                    </div>
+                    </div> 
                     <div class="col-xl-3 col-lg-4 offset-xl-1">
                         <div class="social-tabs">
                             <div class="footer-logo">
@@ -177,43 +249,82 @@
         <div class="footer-shape"></div>
     </footer>
 </section>
-<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/js/vendors.min.js?v=1.0.0"></script>
+<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/js/vendors.min.js?v=<?php echo CONST_CSS_VERSION?>"></script>
 <script type="text/javascript">
     var customVariables = {
         assetsURL : 'assets',
     };
 </script>
-<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/js/scripts.min.js?v=1.0.0"></script>
+<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/js/scripts.min.js?v=<?php echo CONST_CSS_VERSION?>"></script>
 <script type="text/javascript">
     var nonce = "<?php echo wp_create_nonce("user_nonce") ?>";
     $('.submit-btn').click(function(event)
         {
            event.preventDefault();
+
+           // jQuery('.subscrib').val('');
+           jQuery('.error-response').hide();
+           jQuery('.success').hide();
+
             var user_email = jQuery("#user-email").val();
-            var dataString = {
-                user_email:user_email,
-                
-                action:'request_information'
-            };
-            $.ajax(
+            var lang = jQuery("#lang").val();
+            var  aErrors = {}
+            if(!user_email)
             {
-                type:"POST",
-                url: "<?php echo admin_url('admin-ajax.php'); ?>",
-                data:dataString,
-                nonce: nonce,
-                success: function(result)
-                {   
-                    result = jQuery.parseJSON(result);
-                    if(result.status==1)
-                    {   
-                        console.log(result);
-                    }
-                    else
-                    {   
-                        console.log(result.response);
-                    }
+                aErrors['email'] = "<?php echo $required_error_message ; ?>";
+            }
+           
+            if(user_email)
+            {
+                var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                validEmail = regex.test(user_email);
+                if(validEmail==false)
+                {
+                    aErrors['email'] = " <?php echo $valid_email_error_message ; ?>";
                 }
-            });  
+            }
+            var errsLength = Object.keys(aErrors).length;
+            if(errsLength > 0)
+            {
+                $.each(aErrors, function( key, value ) 
+                {
+                    $('.error-'+key).html(value);
+                    $('.error-'+key).show().delay(3000).fadeOut();
+                });
+
+            }
+            else
+            {
+                var dataString = {
+                    user_email:user_email,
+                    lang:lang,
+                    action:'request_information'
+                };
+                $.ajax(
+                {
+                    type:"POST",
+                    url: "<?php echo admin_url('admin-ajax.php'); ?>",
+                    data:dataString,
+                    nonce: nonce,
+                    success: function(result)
+                    {   
+                        result = jQuery.parseJSON(result);
+                        // $('.subscrib').val('');
+                        jQuery("#user-email").val('');
+                        if(result.status==1)
+                        {   
+                            
+                            $('.success').html('<p>'+result.response+'<p>');
+                            $('.success').show().delay(10000).fadeOut();
+                        }
+                        else
+                        {   
+                            $('.error-response').html('<p>'+result.response+'<p>');
+                            $('.error-response').show().delay(10000).fadeOut();
+                        }
+                    }
+                });  
+            }
         });
 </script>
     </body>
